@@ -2,78 +2,153 @@ package android.assignment.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MovieListing {
+public class MovieListing
+{
+    private String overview;
 
-    @SerializedName("item_count")
 
-    private String itemCount;
+    @SerializedName("original_language")
+    private String originalLanguage;
 
-    @SerializedName("list_type")
-    private String listType;
+    @SerializedName("original_title")
+    private String originalTitle;
 
-    private String name;
+    private String video;
 
-    private String description;
+    private String title;
 
-    @SerializedName("favorite_count")
-    private String favorite_count;
-
-    private String id;
-
-    @SerializedName("iso_639_1")
-    private String iso6391;
+    @SerializedName("genre_ids")
+    private String[] genreIds;
 
     @SerializedName("poster_path")
     private String posterPath;
 
-    public String getItemCount()
+    @SerializedName("backdrop_path")
+    private String backdropPath;
+
+    @SerializedName("release_date")
+    private String releaseDate;
+
+    @SerializedName("vote_average")
+    private String voteAverage;
+
+    private String popularity;
+
+    private String id;
+
+    private String adult;
+
+    @SerializedName("vote_count")
+    private String voteCount;
+
+    public String getOverview ()
     {
-        return itemCount;
+        return overview;
     }
 
-    public void setItemCount(String itemCount)
+    public void setOverview (String overview)
     {
-        this.itemCount = itemCount;
+        this.overview = overview;
     }
 
-    public String getListType()
+    public String getOriginalLanguage()
     {
-        return listType;
+        return originalLanguage;
     }
 
-    public void setListType(String listType)
+    public void setOriginalLanguage(String originalLanguage)
     {
-        this.listType = listType;
+        this.originalLanguage = originalLanguage;
     }
 
-    public String getName ()
+    public String getOriginalTitle()
     {
-        return name;
+        return originalTitle;
     }
 
-    public void setName (String name)
+    public void setOriginalTitle(String originalTitle)
     {
-        this.name = name;
+        this.originalTitle = originalTitle;
     }
 
-    public String getDescription ()
+    public String getVideo ()
     {
-        return description;
+        return video;
     }
 
-    public void setDescription (String description)
+    public void setVideo (String video)
     {
-        this.description = description;
+        this.video = video;
     }
 
-    public String getFavorite_count ()
+    public String getTitle ()
     {
-        return favorite_count;
+        return title;
     }
 
-    public void setFavorite_count (String favorite_count)
+    public void setTitle (String title)
     {
-        this.favorite_count = favorite_count;
+        this.title = title;
+    }
+
+    public String[] getGenreIds()
+    {
+        return genreIds;
+    }
+
+    public void setGenreIds(String[] genreIds)
+    {
+        this.genreIds = genreIds;
+    }
+
+    public String getPosterPath()
+    {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath)
+    {
+        this.posterPath = posterPath;
+    }
+
+    public String getBackdropPath()
+    {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath)
+    {
+        this.backdropPath = backdropPath;
+    }
+
+    public String getReleaseDate()
+    {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate)
+    {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getVoteAverage()
+    {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(String voteAverage)
+    {
+        this.voteAverage = voteAverage;
+    }
+
+    public String getPopularity ()
+    {
+        return popularity;
+    }
+
+    public void setPopularity (String popularity)
+    {
+        this.popularity = popularity;
     }
 
     public String getId ()
@@ -86,29 +161,29 @@ public class MovieListing {
         this.id = id;
     }
 
-    public String getIso6391()
+    public String getAdult ()
     {
-        return iso6391;
+        return adult;
     }
 
-    public void setIso6391(String iso6391)
+    public void setAdult (String adult)
     {
-        this.iso6391 = iso6391;
+        this.adult = adult;
     }
 
-    public String getPosterPath ()
+    public String getVoteCount()
     {
-        return posterPath;
+        return voteCount;
     }
 
-    public void setPosterPath (String posterPath)
+    public void setVoteCount(String voteCount)
     {
-        this.posterPath = posterPath;
+        this.voteCount = voteCount;
     }
 
     @Override
     public String toString()
     {
-        return "ClassPojo [itemCount = "+ itemCount +", listType = "+ listType +", name = "+name+", description = "+description+", favorite_count = "+favorite_count+", id = "+id+", iso6391 = "+ iso6391 +", posterPath = "+ posterPath +"]";
+        return "ClassPojo [overview = "+overview+", originalLanguage = "+ originalLanguage +", originalTitle = "+ originalTitle +", video = "+video+", title = "+title+", genreIds = "+ genreIds +", posterPath = "+ posterPath +", backdropPath = "+ backdropPath +", releaseDate = "+ releaseDate +", voteAverage = "+ voteAverage +", popularity = "+popularity+", id = "+id+", adult = "+adult+", voteCount = "+ voteCount +"]";
     }
 }

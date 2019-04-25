@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.assignment.R;
 import android.assignment.databinding.RowListingsBinding;
 import android.assignment.managers.AppManager;
-import android.assignment.models.Movie;
+import android.assignment.models.MovieListing;
 import android.assignment.utils.ApiUtils;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private MutableLiveData<List<Movie>> items;
+    private MutableLiveData<List<MovieListing>> items;
     private Context context;
     private RequestOptions imageOptions;
     private static final int TYPE_ITEM = 1;
@@ -35,7 +35,7 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private AppManager appManager;
     private boolean showAlert;
 
-    public ListingAdapter(Context context, AppManager appManager, MutableLiveData<List<Movie>> items, OnClickListener onClickListener) {
+    public ListingAdapter(Context context, AppManager appManager, MutableLiveData<List<MovieListing>> items, OnClickListener onClickListener) {
         this.context = context;
         this.items = items;
         this.showAlert = showAlert;
@@ -78,8 +78,8 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             if (items.getValue() != null) {
 
-                final Movie movie = items.getValue().get(position);
-                listingHolder.binding.setMovie(movie);
+                final MovieListing MovieListing = items.getValue().get(position);
+                listingHolder.binding.setMovie(MovieListing);
                 listingHolder.binding.setAppManager(appManager);
                 listingHolder.binding.executePendingBindings();
 
@@ -87,13 +87,13 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     @Override
                     public void onClick(View view) {
 
-                        onClickListener.onItemClick(listingHolder.getAdapterPosition(), movie, listingHolder.binding);
+                        onClickListener.onItemClick(listingHolder.getAdapterPosition(), MovieListing, listingHolder.binding);
 
 
                     }
                 });
 
-                String imgUrl = movie.getPoster_path() != null ? (ApiUtils.getApiBaseUrl() + movie.getPoster_path()) : null;
+                String imgUrl = "https://image.tmdb.org/t/p/w185_and_h278_bestv2/" + MovieListing.getPosterPath();
                 Glide.with(context)
                         .load(imgUrl)
                         .apply(imageOptions)
@@ -102,14 +102,14 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public void setData(List<Movie> dataItems) {
+    public void setData(List<MovieListing> dataItems) {
         if (dataItems == null)
             return;
         this.items.setValue(dataItems);
         notifyDataSetChanged();
     }
 
-    public List<Movie> getData() {
+    public List<MovieListing> getData() {
         return items.getValue();
     }
 
@@ -168,7 +168,7 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public interface OnClickListener {
 
-        void onItemClick(int position, Movie movie, RowListingsBinding binding);
+        void onItemClick(int position, MovieListing MovieListing, RowListingsBinding binding);
 
 
     }

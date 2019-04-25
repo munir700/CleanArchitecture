@@ -9,7 +9,7 @@
 
         <variable
             name="movie"
-            type="android.assignment.models.Movie" />
+            type="android.assignment.models.MovieListing" />
 
         <variable
             name="appManager"
@@ -60,7 +60,7 @@
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:gravity="start"
-                android:text='@{movie.name}'
+                android:text='@{movie.title}'
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_6sdp"
                 android:ellipsize="end"
-                android:text='@{movie.description}'
+                android:text='@{movie.originalTitle}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/title_tv"

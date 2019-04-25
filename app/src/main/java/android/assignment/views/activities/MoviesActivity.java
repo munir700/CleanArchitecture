@@ -8,6 +8,7 @@ import android.assignment.databinding.ActivityMoviesBinding;
 import android.assignment.databinding.RowListingsBinding;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
+import android.assignment.models.MovieListing;
 import android.assignment.viewModels.MovieViewModel;
 import android.content.Context;
 import android.content.Intent;
@@ -78,7 +79,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             ((SimpleItemAnimator) binding.recyclerResults.getItemAnimator()).setSupportsChangeAnimations(false);
             listingAdapter = new ListingAdapter(MoviesActivity.this, viewModel.getAppManager(), viewModel.listData, new ListingAdapter.OnClickListener() {
                 @Override
-                public void onItemClick(int position, Movie movie, RowListingsBinding binding) {
+                public void onItemClick(int position, MovieListing movie, RowListingsBinding binding) {
 
 
                 }
@@ -110,9 +111,9 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
     }
 
     private void loadMovies() {
-        viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
+        viewModel.getMovies().observe(this, new Observer<List<MovieListing>>() {
             @Override
-            public void onChanged(@Nullable List<Movie> movies) {
+            public void onChanged(@Nullable List<MovieListing> movies) {
                 listingAdapter.setData(movies);
             }
         });

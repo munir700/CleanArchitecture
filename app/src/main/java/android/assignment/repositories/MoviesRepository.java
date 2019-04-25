@@ -8,6 +8,7 @@ import android.assignment.base.BaseNetworkCallBack;
 import android.assignment.base.BaseViewModel;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
+import android.assignment.models.MovieListing;
 import android.assignment.utils.NetworkUtils;
 
 import java.util.List;
@@ -31,17 +32,17 @@ public class MoviesRepository {
 
     }
 
-    public MutableLiveData<List<Movie>> getMoviesList(final BaseViewModel viewModel, Call<List<Movie>> listCall) {
+    public MutableLiveData<List<MovieListing>> getMoviesList(final BaseViewModel viewModel, Call<List<MovieListing>> listCall) {
 
-        final MutableLiveData<List<Movie>> moviesLiveData = new MutableLiveData<>();
+        final MutableLiveData<List<MovieListing>> moviesLiveData = new MutableLiveData<>();
         if (networkUtils.isConnectedToInternet()) {
             if (listCall != null)
                 listCall.cancel();
 
-            listCall = apiService.getMovieList(550, BuildConfig.API_KEY, "en-US", 1);
-            listCall.enqueue(new BaseNetworkCallBack<List<Movie>>(viewModel) {
+            listCall = apiService.getMovieList(BuildConfig.API_KEY, "en-US", 4);
+            listCall.enqueue(new BaseNetworkCallBack<List<MovieListing>>(viewModel) {
                 @Override
-                public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                public void onResponse(Call<List<MovieListing>> call, Response<List<MovieListing>> response) {
                     super.onResponse(call, response);
                     if (!call.isCanceled() && response.isSuccessful()) {
                         moviesLiveData.postValue(response.body());
@@ -49,7 +50,7 @@ public class MoviesRepository {
                 }
 
                 @Override
-                public void onFailure(Call<List<Movie>> call, Throwable throwable) {
+                public void onFailure(Call<List<MovieListing>> call, Throwable throwable) {
                     super.onFailure(call, throwable);
                 }
             });

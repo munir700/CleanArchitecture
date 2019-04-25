@@ -1,6 +1,7 @@
 package android.assignment.api;
 
 import android.assignment.models.Movie;
+import android.assignment.models.MovieListing;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("movie/{movie_id}/lists")
-    Call<List<Movie>> getMovieList(@Path("movie_id") int movieId, @Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int page);
+    @GET("movie/now_playing/")
+    Call<List<MovieListing>> getMovieList(@Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int page);
 
 
     @GET("/movie/{movie_id}")
