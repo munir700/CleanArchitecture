@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.View;
@@ -86,7 +87,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             });
 
             binding.recyclerResults.setAdapter(listingAdapter);
-
+            binding.recyclerResults.setLayoutManager(new GridLayoutManager(this, 3));
 
             binding.searchAgainBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

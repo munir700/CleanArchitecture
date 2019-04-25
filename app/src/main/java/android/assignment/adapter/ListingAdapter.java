@@ -5,7 +5,6 @@ import android.assignment.R;
 import android.assignment.databinding.RowListingsBinding;
 import android.assignment.managers.AppManager;
 import android.assignment.models.MovieListing;
-import android.assignment.utils.ApiUtils;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -41,7 +40,7 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.showAlert = showAlert;
         imageOptions = new RequestOptions()
                 .placeholder(R.drawable.img_loading_pics)
-                .error(R.drawable.img_loading_pics)
+                .error(R.color.black)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
         this.onClickListener = onClickListener;
@@ -93,7 +92,7 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
 
-                String imgUrl = "https://image.tmdb.org/t/p/w185_and_h278_bestv2/" + MovieListing.getPosterPath();
+                String imgUrl = "https://image.tmdb.org/t/p/w300_and_h450_bestv2/" + MovieListing.getPosterPath();
                 Glide.with(context)
                         .load(imgUrl)
                         .apply(imageOptions)
