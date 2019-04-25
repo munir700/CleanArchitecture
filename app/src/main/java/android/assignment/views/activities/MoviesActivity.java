@@ -6,9 +6,11 @@ import android.assignment.adapter.ListingAdapter;
 import android.assignment.base.BaseActivity;
 import android.assignment.databinding.ActivityMoviesBinding;
 import android.assignment.databinding.RowListingsBinding;
+import android.assignment.enums.ErrorResponseEnum;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
+import android.assignment.utils.ErrorResponse;
 import android.assignment.viewModels.MovieViewModel;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesBinding> {
@@ -41,15 +44,28 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
         super.onObserve(event, eventMessage);
         switch (event) {
             case NO_INTERNET_CONNECTION:
-                onApiRequestFailed(getString(R.string.NO_INTERNET_CONNECTIVITY));
+                binding.pullToRefresh.setVisibility(View.GONE);
+                binding.constraintError.setVisibility(View.VISIBLE);
+                viewModel.setErrorResponse(new ErrorResponse.Builder(ErrorResponseEnum.NO_INTERNET_CONNECTION).build());
+                hideProgress();
                 break;
             case ON_NO_DATA_RECEIVED:
-                onApiRequestFailed(eventMessage.toString());
+                if (eventMessage != null) {
+                    onApiRequestFailed(eventMessage.toString());
+                }
+                binding.pullToRefresh.setVisibility(View.GONE);
+                binding.constraintError.setVisibility(View.VISIBLE);
+                viewModel.listData.setValue(new ArrayList<MovieListing>());
+                listingAdapter.setData(new ArrayList<MovieListing>());
+                viewModel.setErrorResponse(new ErrorResponse.Builder(ErrorResponseEnum.NO_DATA_RECEIVED).build());
                 break;
             case ON_API_REQUEST_FAILURE:
-                onApiRequestFailed(eventMessage.toString());
+                binding.constraintError.setVisibility(View.VISIBLE);
+                viewModel.setErrorResponse(new ErrorResponse.Builder(ErrorResponseEnum.API_REQUEST_FAILURE).build());
                 break;
             case ON_API_CALL_START:
+                binding.pullToRefresh.setVisibility(View.VISIBLE);
+                binding.constraintError.setVisibility(View.GONE);
                 showProgress();
                 break;
             case ON_API_CALL_STOP:

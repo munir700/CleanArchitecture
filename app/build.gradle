@@ -13,7 +13,7 @@ android {
         buildConfigField "Boolean", "API_LOGGING", "true"
         buildConfigField "String", "API_BASE_URL", "\"https://api.themoviedb.org/3/\""
         buildConfigField "String", "API_KEY", "\"41db4b67d89b0e6a70129ce206499169\""
-        buildConfigField "String", "AUTH_KEY", "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MWRiNGI2N2Q4OWIwZTZhNzAxMjljZTIwNjQ5OTE2OSIsInN1YiI6IjVjYmFhM2UyOTI1MTQxMDhkOGZhZTM0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.U4aLq-4pmc0We_IchTeOfy9JN7Esblz5lx7gGjUaK7Q\""
+        buildConfigField "String", "IMG_BASE_URL", "\"https://image.tmdb.org/t/p/w300_and_h450_bestv2/\""
     }
     buildTypes {
         debug {

@@ -1,6 +1,7 @@
 package android.assignment.adapter;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.assignment.BuildConfig;
 import android.assignment.R;
 import android.assignment.databinding.RowListingsBinding;
 import android.assignment.managers.AppManager;
@@ -85,14 +86,11 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 listingHolder.binding.itemCardListing.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         onClickListener.onItemClick(listingHolder.getAdapterPosition(), MovieListing, listingHolder.binding);
-
-
                     }
                 });
 
-                String imgUrl = "https://image.tmdb.org/t/p/w300_and_h450_bestv2/" + MovieListing.getPosterPath();
+                String imgUrl = BuildConfig.IMG_BASE_URL + MovieListing.getPosterPath();
                 Glide.with(context)
                         .load(imgUrl)
                         .apply(imageOptions)

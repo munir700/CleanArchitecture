@@ -2,6 +2,7 @@ package android.assignment.base;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.assignment.R;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.interfaces.ViewModelCallBackObserver;
 import android.assignment.ui.ActionDialog;
@@ -55,8 +56,7 @@ public abstract class BaseActivity<VM extends BaseViewModel, DB extends ViewData
         if (binding != null) {
             //TODO use layout in xml.It is recommended for approact.
             //otherwise the binding object is going to be null and non of the views are accessable.
-            // progressBar = binding.getRoot().findViewById(R.id.progressBar);
-            progressBar = new LinearLayout(this);
+            progressBar = binding.getRoot().findViewById( R.id.progressBar);
             if (progressBar != null) {
                 progressBar.setVisibility(View.GONE);
             }
