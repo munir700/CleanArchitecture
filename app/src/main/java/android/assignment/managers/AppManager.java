@@ -23,6 +23,11 @@ public class AppManager {
     }
 
     public String getResourceString(int resourceName) {
-        return getContext().getString(resourceName);
+        try {
+            return getContext().getString(resourceName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "dfgd";
     }
 }

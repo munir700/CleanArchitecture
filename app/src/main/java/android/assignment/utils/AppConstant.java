@@ -6,6 +6,10 @@ import android.widget.ImageView;
 public class AppConstant {
     @BindingAdapter({"android:src"})
     public static void setImageViewResource(ImageView imageView, int resource) {
-        imageView.setImageResource(resource);
+        try {
+            imageView.setImageResource(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

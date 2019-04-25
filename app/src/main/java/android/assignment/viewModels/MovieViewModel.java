@@ -1,6 +1,7 @@
 package android.assignment.viewModels;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.assignment.BR;
 import android.assignment.base.BaseViewModel;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
@@ -38,7 +39,7 @@ public class MovieViewModel extends BaseViewModel {
 
     public void setErrorResponse(ErrorResponse errorResponse) {
         this.errorResponse = errorResponse;
-        //notifyPropertyChanged(BR.errorResponse);
+        notifyPropertyChanged(BR.errorResponse);
     }
 
     public MutableLiveData<List<MovieListing>> getMovies() {
