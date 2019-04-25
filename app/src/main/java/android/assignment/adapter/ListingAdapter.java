@@ -5,6 +5,7 @@ import android.assignment.R;
 import android.assignment.databinding.RowListingsBinding;
 import android.assignment.managers.AppManager;
 import android.assignment.models.Movie;
+import android.assignment.utils.ApiUtils;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -92,12 +93,9 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
 
-               /* Media media = newsArticle.getMedia() != null && newsArticle.getMedia().length > 0 ? newsArticle.getMedia()[0] : null;
-                MediaMetadata mediaMetadata = media != null && media.getMediaMetadata() != null && media.getMediaMetadata().length > 0 ? media.getMediaMetadata()[0] : null;
-                String imgUrl = mediaMetadata != null ? mediaMetadata.getUrl() : null;
-*/
+                String imgUrl = movie.getPoster_path() != null ? (ApiUtils.getApiBaseUrl() + movie.getPoster_path()) : null;
                 Glide.with(context)
-                        .load("")
+                        .load(imgUrl)
                         .apply(imageOptions)
                         .into(listingHolder.binding.thumbIv);
             }

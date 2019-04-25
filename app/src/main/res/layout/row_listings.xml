@@ -60,7 +60,7 @@
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:gravity="start"
-                android:text='@{movie.originalTitle}'
+                android:text='@{movie.name}'
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -69,13 +69,13 @@
 
 
             <TextView
-                android:id="@+id/abstract_tv"
+                android:id="@+id/description_tv"
                 style="@style/row_tv_style"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_6sdp"
                 android:ellipsize="end"
-                android:text='@{movie.overview}'
+                android:text='@{movie.description}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/title_tv"
