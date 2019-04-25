@@ -10,6 +10,11 @@
             name="titleText"
             type="android.databinding.ObservableField&lt;String&gt;" />
 
+        <variable
+            name="vm"
+            type="android.assignment.viewModels.MovieViewModel" />
+
+
     </data>
 
     <RelativeLayout
@@ -34,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                 <android.support.v7.widget.AppCompatTextView
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/title_tv_tb"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -59,7 +64,113 @@
 
 
         </android.support.v7.widget.Toolbar>
-        <include layout="@layout/movies_content" />
+
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/progress_bar_loading"
+            android:visibility="visible">
+
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/pull_to_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+               >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/background_color"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraint_error"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background_color"
+                android:visibility="gone">
+
+
+                <ImageView
+                    android:id="@+id/result_error_iv"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:src="@{vm.errorResponse.resourceId, default=@drawable/ic_error_small_nodata}"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/result_error_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:layout_marginLeft="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_marginEnd="@dimen/_14sdp"
+                    android:layout_marginRight="@dimen/_14sdp"
+                    android:gravity="center"
+                    android:text='@{vm.appManager.getResourceString(vm.errorResponse.messageTitle)}'
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+                <TextView
+                    android:id="@+id/result_error_detail_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text='@{vm.appManager.getResourceString(vm.errorResponse.messageDetails)}'
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintEnd_toEndOf="@+id/result_error_detail"
+                    app:layout_constraintStart_toStartOf="@+id/result_error_detail"
+                    app:layout_constraintTop_toBottomOf="@+id/result_error_detail" />
+
+
+                <Button
+                    android:id="@+id/search_again_btn"
+                    style="@style/button_normal"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_7sdp"
+                    android:text='@{vm.appManager.getResourceString(vm.errorResponse.actionMessage), default=@string/STR_RETRY}'
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.4" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <include
+            layout="@layout/progressbar"
+            android:visibility="gone" />
 
         <include layout="@layout/progressbar" />
     </RelativeLayout>

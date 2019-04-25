@@ -12,50 +12,41 @@ public class ProductionCompanies {
     @SerializedName("origin_country")
     private String originCountry;
 
-    public String getLogoPath()
-    {
+    public String getLogoPath() {
         return logoPath;
     }
 
-    public void setLogoPath(String logoPath)
-    {
+    public void setLogoPath(String logoPath) {
         this.logoPath = logoPath;
     }
 
-    public String getName ()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName (String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getId ()
-    {
+    public String getId() {
         return id;
     }
 
-    public void setId (String id)
-    {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getOriginCountry()
-    {
+    public String getOriginCountry() {
         return originCountry;
     }
 
-    public void setOriginCountry(String originCountry)
-    {
+    public void setOriginCountry(String originCountry) {
         this.originCountry = originCountry;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [logoPath = "+ logoPath +", name = "+name+", id = "+id+", originCountry = "+ originCountry +"]";
+    public String toString() {
+        return "ClassPojo [logoPath = " + logoPath + ", name = " + name + ", id = " + id + ", originCountry = " + originCountry + "]";
     }
 
 }

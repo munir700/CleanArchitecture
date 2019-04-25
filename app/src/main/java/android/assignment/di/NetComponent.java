@@ -33,6 +33,7 @@ public interface NetComponent {
     interface Builder {
         @BindsInstance
         Builder application(Application application);
+
         NetComponent build();
     }
 

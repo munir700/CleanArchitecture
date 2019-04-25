@@ -1,8 +1,6 @@
 package android.assignment.api;
 
 
-
-
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.annotation.Annotation;

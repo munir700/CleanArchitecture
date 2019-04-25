@@ -1,7 +1,6 @@
 package android.assignment.viewModels;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.assignment.BR;
 import android.assignment.base.BaseViewModel;
 import android.assignment.models.Movie;
 import android.assignment.repositories.MoviesRepository;
@@ -16,7 +15,10 @@ import retrofit2.Call;
 
 public class MovieViewModel extends BaseViewModel {
 
+    public MutableLiveData<List<Movie>> listData = new MutableLiveData<>();
+
     private ErrorResponse errorResponse;
+
     Call<List<Movie>> listCall;
 
     @Inject
@@ -41,4 +43,6 @@ public class MovieViewModel extends BaseViewModel {
     public MutableLiveData<List<Movie>> getMovies() {
         return moviesRepository.getMoviesList(this, listCall);
     }
+
+
 }

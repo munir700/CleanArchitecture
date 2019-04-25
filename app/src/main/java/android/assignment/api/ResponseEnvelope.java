@@ -7,8 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 
-
-public class ResponseEnvelope<T> implements Serializable{
+public class ResponseEnvelope<T> implements Serializable {
 
     int id;
     int page;
@@ -22,12 +21,11 @@ public class ResponseEnvelope<T> implements Serializable{
     T listItem;
 
 
-    public static ExclusionStrategyResponse getExclusionStrategy(){
+    public static ExclusionStrategyResponse getExclusionStrategy() {
         return new ExclusionStrategyResponse();
     }
 
 }
-
 
 
 class ExclusionStrategyResponse implements ExclusionStrategy {
@@ -37,6 +35,6 @@ class ExclusionStrategyResponse implements ExclusionStrategy {
     }
 
     public boolean shouldSkipField(FieldAttributes f) {
-        return ( f.getName().equals("response"));
+        return (f.getName().equals("response"));
     }
 }

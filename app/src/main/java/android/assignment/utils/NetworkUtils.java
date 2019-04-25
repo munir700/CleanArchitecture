@@ -24,7 +24,7 @@ public class NetworkUtils {
     }
 
 
-    public boolean isConnectedToInternet(){
+    public boolean isConnectedToInternet() {
 
         boolean connected = false;
         if (context != null) {
@@ -57,6 +57,7 @@ public class NetworkUtils {
         }
         return null;
     }
+
     public Context getContext() {
         return context;
     }

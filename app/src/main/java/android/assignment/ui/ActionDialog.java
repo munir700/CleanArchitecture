@@ -51,7 +51,7 @@ public class ActionDialog extends Dialog implements View.OnClickListener {
             binding.btnNo.setOnClickListener(this);
         }
 
-        if(getWindow() != null){
+        if (getWindow() != null) {
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
     }

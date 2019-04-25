@@ -44,6 +44,7 @@ public abstract class BaseActivity<VM extends BaseViewModel, DB extends ViewData
     public void onObserve(ViewModelEventsEnum event, Object eventMessage) {
 
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -71,7 +72,6 @@ public abstract class BaseActivity<VM extends BaseViewModel, DB extends ViewData
     protected void onResume() {
         super.onResume();
     }
-
 
 
     protected void doStartActivity(Context context, Class cls) {

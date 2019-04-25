@@ -8,29 +8,24 @@ public class ProductionCountries {
 
     private String name;
 
-    public String getIsoCountry()
-    {
+    public String getIsoCountry() {
         return isoCountry;
     }
 
-    public void setIsoCountry(String isoCountry)
-    {
+    public void setIsoCountry(String isoCountry) {
         this.isoCountry = isoCountry;
     }
 
-    public String getName ()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName (String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [isoCountry = "+ isoCountry +", name = "+name+"]";
+    public String toString() {
+        return "ClassPojo [isoCountry = " + isoCountry + ", name = " + name + "]";
     }
 }

@@ -22,7 +22,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    NetworkUtils providesNetworkUtils(Application application){
+    NetworkUtils providesNetworkUtils(Application application) {
         NetworkUtils networkUtils = new NetworkUtils(application);
         return networkUtils;
     }

@@ -7,29 +7,24 @@ public class SpokenLanguages {
     @SerializedName("iso_639_1")
     private String isoLang;
 
-    public String getName ()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName (String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getIsoLang()
-    {
+    public String getIsoLang() {
         return isoLang;
     }
 
-    public void setIsoLang(String isoLang)
-    {
+    public void setIsoLang(String isoLang) {
         this.isoLang = isoLang;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [name = "+name+", isoLang = "+ isoLang +"]";
+    public String toString() {
+        return "ClassPojo [name = " + name + ", isoLang = " + isoLang + "]";
     }
 }
