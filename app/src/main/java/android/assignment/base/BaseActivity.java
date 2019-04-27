@@ -13,7 +13,6 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
@@ -56,7 +55,7 @@ public abstract class BaseActivity<VM extends BaseViewModel, DB extends ViewData
         if (binding != null) {
             //TODO use layout in xml.It is recommended for approact.
             //otherwise the binding object is going to be null and non of the views are accessable.
-            progressBar = binding.getRoot().findViewById( R.id.progressBar);
+            progressBar = binding.getRoot().findViewById(R.id.progressBar);
             if (progressBar != null) {
                 progressBar.setVisibility(View.GONE);
             }
@@ -73,6 +72,11 @@ public abstract class BaseActivity<VM extends BaseViewModel, DB extends ViewData
         super.onResume();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel.appManager.mustDie(this);
+    }
 
     protected void doStartActivity(Context context, Class cls) {
         Intent intent = new Intent(context, cls);

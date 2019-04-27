@@ -3,7 +3,14 @@ package android.assignment;
 import android.app.Activity;
 import android.app.Application;
 import android.assignment.di.DaggerNetComponent;
+import android.assignment.extendedModels.CustomDumperPlugin;
 import android.content.Context;
+
+import com.facebook.stetho.DumperPluginsProvider;
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.dumpapp.DumperPlugin;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
 
@@ -12,6 +19,8 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
 public class AppApplication extends Application implements HasActivityInjector {
+
+    private RefWatcher refWatcher;
 
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingInjector;
@@ -25,13 +34,33 @@ public class AppApplication extends Application implements HasActivityInjector {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (BuildConfig.DEBUG)
+            refWatcher = LeakCanary.install(this);
+        initStetho();
         DaggerNetComponent.builder()
                 .application(this)
                 .build()
                 .inject(this);
-
     }
 
+    private void initStetho() {
+        Stetho.initialize(Stetho.newInitializerBuilder(this)
+                .enableDumpapp(new DumperPluginsProvider() {
+                    @Override
+                    public Iterable<DumperPlugin> get() {
+                        return new Stetho.DefaultDumperPluginsBuilder(getApplicationContext())
+                                .provide(new CustomDumperPlugin())
+                                .finish();
+                    }
+                })
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(getApplicationContext()))
+                .build());
+    }
+
+
+    public RefWatcher getRefWatcher() {
+        return refWatcher;
+    }
 
     public AndroidInjector<Activity> activityInjector() {
         return activityDispatchingInjector;
