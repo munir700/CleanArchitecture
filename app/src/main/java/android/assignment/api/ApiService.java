@@ -18,7 +18,7 @@ public interface ApiService {
     Call<List<MovieListing>> getMovieList(@Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int page);
 
 
-    @GET("/movie/{movie_id}")
-    Call<Movie> getMovieDetail(@Path("movie_id") String movieId, @Field("api_key") String apiKey, @Header("Accept-Language") String lang);
+    @GET("movie/{movie_id}")
+    Call<Movie> getMovieDetail(@Path("movie_id") int movieId, @Query("api_key") String apiKey, @Query("language") String lang);
 
 }

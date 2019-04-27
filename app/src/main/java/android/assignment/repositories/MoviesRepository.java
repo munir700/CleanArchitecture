@@ -60,4 +60,34 @@ public class MoviesRepository {
         }
         return moviesLiveData;
     }
+
+
+    public MutableLiveData<Movie> getMovieDetail(final BaseViewModel viewModel, Call<Movie> listCall, String movieId) {
+
+        final MutableLiveData<Movie> moviesLiveData = new MutableLiveData<>();
+        if (networkUtils.isConnectedToInternet()) {
+            if (listCall != null)
+                listCall.cancel();
+
+            listCall = apiService.getMovieDetail(Integer.valueOf(movieId), BuildConfig.API_KEY, "en-US" );
+            listCall.enqueue(new BaseNetworkCallBack<Movie>(viewModel) {
+                @Override
+                public void onResponse(Call<Movie> call, Response<Movie> response) {
+                    super.onResponse(call, response);
+                    if (!call.isCanceled() && response.isSuccessful()) {
+                        moviesLiveData.postValue(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Movie> call, Throwable throwable) {
+                    super.onFailure(call, throwable);
+                }
+            });
+
+        } else {
+            viewModel.notifyObserver(ViewModelEventsEnum.NO_INTERNET_CONNECTION, viewModel.getAppManager().getContext().getString(R.string.NO_INTERNET_CONNECTIVITY));
+        }
+        return moviesLiveData;
+    }
 }

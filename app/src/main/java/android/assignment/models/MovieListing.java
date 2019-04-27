@@ -2,7 +2,9 @@ package android.assignment.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MovieListing
+import java.io.Serializable;
+
+public class MovieListing implements Serializable
 {
     private String overview;
 
@@ -36,7 +38,7 @@ public class MovieListing
 
     private String id;
 
-    private String adult;
+    private boolean adult;
 
     @SerializedName("vote_count")
     private String voteCount;
@@ -161,12 +163,12 @@ public class MovieListing
         this.id = id;
     }
 
-    public String getAdult ()
+    public boolean getAdult ()
     {
         return adult;
     }
 
-    public void setAdult (String adult)
+    public void setAdult (boolean adult)
     {
         this.adult = adult;
     }

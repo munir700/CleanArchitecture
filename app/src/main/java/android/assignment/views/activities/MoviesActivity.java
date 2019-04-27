@@ -25,6 +25,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.assignment.views.activities.MovieDetailActivity.REQUEST_CODE;
+
 public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesBinding> {
 
     private ListingAdapter listingAdapter;
@@ -86,6 +88,8 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding.setVm(viewModel);
+        binding.setCountText(viewModel.getMovieCount());
         initUI();
         loadMovies();
     }
@@ -97,8 +101,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             listingAdapter = new ListingAdapter(MoviesActivity.this, viewModel.getAppManager(), viewModel.listData, new ListingAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position, MovieListing movie, RowListingsBinding binding) {
-
-
+                    MovieDetailActivity.openActivityForResult(MoviesActivity.this, movie, null, REQUEST_CODE, position);
                 }
             });
 
@@ -131,7 +134,9 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
         viewModel.getMovies().observe(this, new Observer<List<MovieListing>>() {
             @Override
             public void onChanged(@Nullable List<MovieListing> movies) {
-                listingAdapter.setData(movies);
+                List<MovieListing> movieList = movies;
+                viewModel.setMovieCount("Movies Count:- " + movieList.size());
+                listingAdapter.setData(movieList);
             }
         });
     }

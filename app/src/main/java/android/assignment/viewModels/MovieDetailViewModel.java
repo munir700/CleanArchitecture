@@ -17,32 +17,20 @@ import javax.inject.Inject;
 
 import retrofit2.Call;
 
-public class MovieViewModel extends BaseViewModel {
+public class MovieDetailViewModel extends BaseViewModel {
 
-    private ObservableField<String> movieCount = new ObservableField<>();
-    public MutableLiveData<List<MovieListing>> listData = new MutableLiveData<>();
 
     private ErrorResponse errorResponse;
 
-    Call<List<MovieListing>> listCall;
+    Call<Movie> listCall;
 
     @Inject
     MoviesRepository moviesRepository;
 
     @Inject
-    public MovieViewModel() {
+    public MovieDetailViewModel() {
 
     }
-
-
-    public ObservableField<String> getMovieCount() {
-        return movieCount;
-    }
-
-    public void setMovieCount(String movieCount) {
-        this.movieCount.set(movieCount);
-    }
-
 
     @Bindable
     public ErrorResponse getErrorResponse() {
@@ -54,8 +42,8 @@ public class MovieViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.errorResponse);
     }
 
-    public MutableLiveData<List<MovieListing>> getMovies() {
-        return moviesRepository.getMoviesList(this, listCall);
+    public MutableLiveData<Movie> getMovieDetail(String moviezId) {
+        return moviesRepository.getMovieDetail(this, listCall, moviezId);
     }
 
     public List<MovieListing> removeAdultMovies(List<MovieListing> listData) {
