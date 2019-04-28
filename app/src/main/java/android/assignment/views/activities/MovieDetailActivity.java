@@ -4,19 +4,23 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.assignment.R;
+import android.assignment.adapter.PhotoSliderAdapter;
 import android.assignment.base.BaseActivity;
 import android.assignment.databinding.ActivityMovieDetailBinding;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
+import android.assignment.models.ProductionCompanies;
 import android.assignment.viewModels.MovieDetailViewModel;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -31,7 +35,7 @@ import com.google.android.exoplayer2.util.Util;
 
 import java.util.List;
 
-public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, ActivityMovieDetailBinding> {
+public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, ActivityMovieDetailBinding> implements PhotoSliderAdapter.OnClickListener {
 
     public static final int REQUEST_CODE = 100;
     public final static String LISTING_POSITION = "listing_index";
@@ -44,7 +48,16 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     private boolean playWhenReady = false;
     private int currentWindow;
     private long playbackPosition;
+    private PhotoSliderAdapter mySliderPagerAdapter;
 
+    public static void openActivityForResult(Activity activity,
+                                             MovieListing movieListing, int requestCode, int listingPosition) {
+
+        Intent intent = new Intent(activity, MovieDetailActivity.class);
+        intent.putExtra(MOVIES_INTENT_KEY, movieListing);
+        intent.putExtra(LISTING_POSITION, listingPosition);
+        activity.startActivityForResult(intent, requestCode);
+    }
 
     @Override
     public Class<MovieDetailViewModel> getViewModel() {
@@ -77,16 +90,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
                 break;
         }
     }
-
-    public static void openActivityForResult(Activity activity,
-                                             MovieListing movieListing, int requestCode, int listingPosition) {
-
-        Intent intent = new Intent(activity, MovieDetailActivity.class);
-        intent.putExtra(MOVIES_INTENT_KEY, movieListing);
-        intent.putExtra(LISTING_POSITION, listingPosition);
-        activity.startActivityForResult(intent, requestCode);
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +132,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
                 binding.setMovie(movieDetail);
                 binding.rlDetails.setGravity(View.VISIBLE);
                 initializePlayer();
+                setPhotoSlider();
             }
         });
     }
@@ -140,6 +144,40 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
         //hideSystemUi();
         loadMovieDetail();
     }
+
+    private void setPhotoSlider() {
+        ProductionCompanies[] productionCompanies = movieDetail.getProductionCompanies() != null ? movieDetail.getProductionCompanies() : new ProductionCompanies[0];
+        if (mySliderPagerAdapter == null) {
+            mySliderPagerAdapter = new PhotoSliderAdapter(this, productionCompanies, this);
+            binding.viewPager.setAdapter(mySliderPagerAdapter);
+            binding.viewPager.setOffscreenPageLimit(4);
+        } else {
+            mySliderPagerAdapter.setPhotos(productionCompanies);
+        }
+        mySliderPagerAdapter.setPhotoSliderCallBackListener(new PhotoSliderAdapter.PhotoSliderCallBack() {
+            @Override
+            public void readyForTransition() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startPostponedEnterTransition();
+                }
+            }
+        });
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
 
     private void initializePlayer() {
         player = ExoPlayerFactory.newSimpleInstance(
@@ -170,5 +208,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
             player.release();
             player = null;
         }
+    }
+
+    @Override
+    public void onItemClick(int position, View view) {
+
     }
 }

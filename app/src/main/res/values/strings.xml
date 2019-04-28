@@ -27,4 +27,6 @@
     <string name="language">Language</string>
     <string name="production_country">Production Countries</string>
     <string name="original_title">Original title</string>
+
+    <string name="STR_DETAILS_TRANSITION">DETAILS_TRANSITION</string>
 </resources>

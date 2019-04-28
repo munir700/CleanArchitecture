@@ -47,6 +47,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fitsSystemWindows="true"
+                        android:transitionName="@string/STR_DETAILS_TRANSITION"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
@@ -147,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_details_label"
-                        android:layout_marginTop="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
                         android:layout_marginBottom="@dimen/_7sdp"
                         android:ellipsize="end"
                         android:maxLines="2"
@@ -184,235 +195,60 @@
                         android:background="@color/white"
                         android:elevation="4dp">
 
-                        <TextView
-                            android:id="@+id/status_tv"
-                            android:layout_width="0dp"
+                        <include
+                            android:id="@+id/status_section"
+                            layout="@layout/row_detail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@string/released"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
+                            app:label='@{@string/released}'
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:value='@{movie.status}' />
 
-                        <TextView
-                            android:id="@+id/status_value_tv"
-                            android:layout_width="0dp"
+                        <include
+                            android:id="@+id/ot_section"
+                            layout="@layout/row_detail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@{movie.status}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/guideline"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:label='@{@string/original_title}'
+                            app:layout_constraintTop_toBottomOf="@+id/status_section"
+                            app:value='@{movie.originalTitle}' />
 
-
-                        <View
-                            android:id="@+id/status_view"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/grey_light"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/status_value_tv" />
-
-
-                        <TextView
-                            android:id="@+id/ot_tv"
-                            android:layout_width="0dp"
+                        <include
+                            android:id="@+id/tagline_section"
+                            layout="@layout/row_detail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@string/original_title"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/status_view" />
+                            app:label='@{@string/tag_line}'
+                            app:layout_constraintTop_toBottomOf="@+id/ot_section"
+                            app:value='@{movie.tagline}' />
 
-                        <TextView
-                            android:id="@+id/ot_value_tv"
-                            android:layout_width="0dp"
+                        <include
+                            android:id="@+id/release_date_section"
+                            layout="@layout/row_detail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@{movie.originalTitle}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/guideline"
-                            app:layout_constraintTop_toBottomOf="@+id/status_view" />
+                            app:label='@{@string/released}'
+                            app:layout_constraintTop_toBottomOf="@+id/tagline_section"
+                            app:value='@{movie.releaseDate}' />
 
-                        <View
-                            android:id="@+id/ot_view"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/grey_light"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ot_value_tv" />
-
-
-                        <TextView
-                            android:id="@+id/tagline_tv"
-                            android:layout_width="0dp"
+                        <include
+                            android:id="@+id/spoken_lang_section"
+                            layout="@layout/row_detail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@string/tag_line"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ot_view" />
+                            app:label='@{@string/language}'
+                            app:layout_constraintTop_toBottomOf="@+id/release_date_section"
+                            app:value='@{movie.getSpokenLanguage()}' />
 
-                        <TextView
-                            android:id="@+id/tagline_value_tv"
-                            android:layout_width="0dp"
+                        <include
+                            android:id="@+id/pc_section"
+                            layout="@layout/row_detail"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@{movie.tagline}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/guideline"
-                            app:layout_constraintTop_toBottomOf="@+id/ot_view" />
-
-                        <View
-                            android:id="@+id/random_view"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/grey_light"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tagline_tv" />
-
-                        <TextView
-                            android:id="@+id/release_date_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@string/released_date"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/random_view" />
-
-                        <TextView
-                            android:id="@+id/release_date_value_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@{movie.releaseDate}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/guideline"
-                            app:layout_constraintTop_toBottomOf="@+id/random_view" />
-
-
-                        <View
-                            android:id="@+id/lang_view"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/grey_light"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/release_date_value_tv" />
-
-                        <TextView
-                            android:id="@+id/spoken_lang_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@string/language"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/lang_view" />
-
-                        <TextView
-                            android:id="@+id/spoken_lang_value_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@{movie.getSpokenLanguage()}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/guideline"
-                            app:layout_constraintTop_toBottomOf="@+id/lang_view" />
-
-
-                        <View
-                            android:id="@+id/pc_view"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@color/grey_light"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/spoken_lang_value_tv" />
-
-                        <TextView
-                            android:id="@+id/pc_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@string/production_country"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/pc_view" />
-
-                        <TextView
-                            android:id="@+id/pc_value_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center|start"
-                            android:maxLines="2"
-                            android:padding="@dimen/_7sdp"
-                            android:text="@{movie.getProductionCounties()}"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_11sdp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/guideline"
-                            app:layout_constraintTop_toBottomOf="@+id/pc_view" />
-
-
-                        <android.support.constraint.Guideline
-                            android:id="@+id/guideline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            app:layout_constraintGuide_percent="0.35" />
+                            app:label='@{@string/production_country}'
+                            app:layout_constraintTop_toBottomOf="@+id/spoken_lang_section"
+                            app:value='@{movie.getProductionCounties()}' />
 
 
                     </android.support.constraint.ConstraintLayout>

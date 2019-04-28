@@ -1,11 +1,12 @@
 package android.assignment.adapter;
 
 import android.app.Activity;
+import android.assignment.BuildConfig;
 import android.assignment.R;
 import android.assignment.databinding.RowItemPhotosSliderBinding;
+import android.assignment.models.ProductionCompanies;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
-import android.media.MediaMetadata;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -31,7 +32,7 @@ public class PhotoSliderAdapter extends PagerAdapter {
     }
 
     private Activity context;
-    private MediaMetadata[] images;
+    private ProductionCompanies[] images;
 
     private RequestOptions imageOptions;
 
@@ -42,7 +43,7 @@ public class PhotoSliderAdapter extends PagerAdapter {
         this.listener = listener;
     }
 
-    public void setPhotos(MediaMetadata[] images) {
+    public void setPhotos(ProductionCompanies[] images) {
         this.images = images;
         this.notifyDataSetChanged();
     }
@@ -53,7 +54,7 @@ public class PhotoSliderAdapter extends PagerAdapter {
     }
 
     public PhotoSliderAdapter(Activity context,
-                              MediaMetadata[] images, OnClickListener onClickListener) {
+                              ProductionCompanies[] images, OnClickListener onClickListener) {
         this.context = context;
         this.images = images;
         this.onClickListener = onClickListener;
@@ -95,15 +96,17 @@ public class PhotoSliderAdapter extends PagerAdapter {
     private void initializeView(final ViewGroup container, final RowItemPhotosSliderBinding binding, final int position) {
 
 
-        MediaMetadata imageModel = images[position];
+        ProductionCompanies productionCompany = images[position];
 
         binding.ivPlaceholder.setVisibility(View.VISIBLE);
         binding.progressBar.setVisibility(View.GONE);
 
         binding.ivPlaceholder.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-       /* Glide.with(context).applyDefaultRequestOptions(imageOptions)
-                .load(imageModel.getUrl())
+        String imgUrl = BuildConfig.IMG_BASE_URL + productionCompany.getLogoPath();
+
+        Glide.with(context).applyDefaultRequestOptions(imageOptions)
+                .load(imgUrl)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -122,7 +125,6 @@ public class PhotoSliderAdapter extends PagerAdapter {
                     }
                 })
                 .into(binding.ivPlaceholder);
-*/
 
         container.addView(binding.getRoot());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

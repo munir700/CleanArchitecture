@@ -4,7 +4,11 @@
     <data>
 
         <variable
-            name="txtValue"
+            name="label"
+            type="String" />
+
+        <variable
+            name="value"
             type="String" />
     </data>
 
@@ -19,7 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center|start"
             android:padding="@dimen/_7sdp"
-            android:text="@string/released"
+            android:text='@{label}'
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -33,7 +37,7 @@
             android:ellipsize="end"
             android:gravity="center|start"
             android:padding="@dimen/_7sdp"
-            android:text="@{txtValue}"
+            android:text="@{value}"
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,10 +49,17 @@
             android:id="@+id/status_view"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_margin="@dimen/_5sdp"
             android:background="@color/grey_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/status_value_tv" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
     </android.support.constraint.ConstraintLayout>
 </layout>
