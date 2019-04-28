@@ -10,4 +10,8 @@
     <color name="black">#000000</color>
     <color name="light_green_color">#9927B16D</color>
     <color name="grey">#6d6e71</color>
+    <color name="border_color_2">#E3E3E3</color>
+    <color name="text_color_4">#898989</color>
+    <color name="bg_color_1">#B0D6F4</color>
+    <color name="transparent">#00000000</color>
 </resources>

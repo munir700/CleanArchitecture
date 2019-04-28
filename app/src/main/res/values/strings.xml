@@ -16,5 +16,9 @@
 
     <string name="STR_YES">Yes</string>
 
-    <color name="border_color_2">#E3E3E3</color>
+    <string name="STR_MOVIE_DETAILS">MOVIE DETAILS</string>
+    <string name="STR_LOADING_DETAILS">Loading details…</string>
+    <string name="STR_READ_MORE">" read more"</string>
+    <string name="STR_READ_LESS">" read less"</string>
+    <string name="DETAILS">Details</string>
 </resources>

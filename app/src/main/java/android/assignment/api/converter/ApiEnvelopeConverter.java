@@ -1,4 +1,6 @@
-package android.assignment.api;
+package android.assignment.api.converter;
+
+import android.assignment.api.ResponseEnvelope;
 
 import com.bumptech.glide.load.HttpException;
 import com.google.gson.Gson;
@@ -11,14 +13,14 @@ import java.lang.reflect.Type;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
-public class ApiConverter<T> implements Converter<ResponseBody, T> {
+public class ApiEnvelopeConverter<T> implements Converter<ResponseBody, T> {
 
     Converter<ResponseBody, ResponseEnvelope<T>> delegate;
     Converter<ResponseBody, ResponseEnvelope> upperWrapDelegate;
 
     ResponseBody updateResponseBody;
 
-    ApiConverter(Converter<ResponseBody, ResponseEnvelope<T>> delegate) {
+    ApiEnvelopeConverter(Converter<ResponseBody, ResponseEnvelope<T>> delegate) {
         this.delegate = delegate;
 
         this.upperWrapDelegate = new Converter<ResponseBody, ResponseEnvelope>() {

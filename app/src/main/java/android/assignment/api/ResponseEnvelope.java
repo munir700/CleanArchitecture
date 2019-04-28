@@ -18,7 +18,7 @@ public class ResponseEnvelope<T> implements Serializable {
     String message;
 
     @SerializedName("results")
-    T listItem;
+    public T listItem;
 
 
     public static ExclusionStrategyResponse getExclusionStrategy() {

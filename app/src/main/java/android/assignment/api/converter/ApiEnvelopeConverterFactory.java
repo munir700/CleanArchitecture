@@ -1,5 +1,7 @@
-package android.assignment.api;
+package android.assignment.api.converter;
 
+
+import android.assignment.api.ResponseEnvelope;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -10,7 +12,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 
-public class ApiConverterFactory extends Converter.Factory {
+public class ApiEnvelopeConverterFactory extends Converter.Factory {
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
@@ -19,6 +21,6 @@ public class ApiConverterFactory extends Converter.Factory {
 
         Converter<ResponseBody, ?> delegate =
                 retrofit.nextResponseBodyConverter(this, wrappedType, annotations);
-        return new ApiConverter(delegate);
+        return new ApiEnvelopeConverter(delegate);
     }
 }

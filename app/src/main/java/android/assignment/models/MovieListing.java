@@ -4,8 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class MovieListing implements Serializable
-{
+public class MovieListing implements Serializable {
     private String overview;
 
 
@@ -43,149 +42,120 @@ public class MovieListing implements Serializable
     @SerializedName("vote_count")
     private String voteCount;
 
-    public String getOverview ()
-    {
+    public String getOverview() {
         return overview;
     }
 
-    public void setOverview (String overview)
-    {
+    public void setOverview(String overview) {
         this.overview = overview;
     }
 
-    public String getOriginalLanguage()
-    {
+    public String getOriginalLanguage() {
         return originalLanguage;
     }
 
-    public void setOriginalLanguage(String originalLanguage)
-    {
+    public void setOriginalLanguage(String originalLanguage) {
         this.originalLanguage = originalLanguage;
     }
 
-    public String getOriginalTitle()
-    {
+    public String getOriginalTitle() {
         return originalTitle;
     }
 
-    public void setOriginalTitle(String originalTitle)
-    {
+    public void setOriginalTitle(String originalTitle) {
         this.originalTitle = originalTitle;
     }
 
-    public String getVideo ()
-    {
+    public String getVideo() {
         return video;
     }
 
-    public void setVideo (String video)
-    {
+    public void setVideo(String video) {
         this.video = video;
     }
 
-    public String getTitle ()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle (String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public String[] getGenreIds()
-    {
+    public String[] getGenreIds() {
         return genreIds;
     }
 
-    public void setGenreIds(String[] genreIds)
-    {
+    public void setGenreIds(String[] genreIds) {
         this.genreIds = genreIds;
     }
 
-    public String getPosterPath()
-    {
+    public String getPosterPath() {
         return posterPath;
     }
 
-    public void setPosterPath(String posterPath)
-    {
+    public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
     }
 
-    public String getBackdropPath()
-    {
+    public String getBackdropPath() {
         return backdropPath;
     }
 
-    public void setBackdropPath(String backdropPath)
-    {
+    public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
     }
 
-    public String getReleaseDate()
-    {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate)
-    {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public String getVoteAverage()
-    {
+    public String getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(String voteAverage)
-    {
+    public void setVoteAverage(String voteAverage) {
         this.voteAverage = voteAverage;
     }
 
-    public String getPopularity ()
-    {
+    public String getPopularity() {
         return popularity;
     }
 
-    public void setPopularity (String popularity)
-    {
+    public void setPopularity(String popularity) {
         this.popularity = popularity;
     }
 
-    public String getId ()
-    {
+    public String getId() {
         return id;
     }
 
-    public void setId (String id)
-    {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public boolean getAdult ()
-    {
+    public boolean getAdult() {
         return adult;
     }
 
-    public void setAdult (boolean adult)
-    {
+    public void setAdult(boolean adult) {
         this.adult = adult;
     }
 
-    public String getVoteCount()
-    {
+    public String getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(String voteCount)
-    {
+    public void setVoteCount(String voteCount) {
         this.voteCount = voteCount;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [overview = "+overview+", originalLanguage = "+ originalLanguage +", originalTitle = "+ originalTitle +", video = "+video+", title = "+title+", genreIds = "+ genreIds +", posterPath = "+ posterPath +", backdropPath = "+ backdropPath +", releaseDate = "+ releaseDate +", voteAverage = "+ voteAverage +", popularity = "+popularity+", id = "+id+", adult = "+adult+", voteCount = "+ voteCount +"]";
+    public String toString() {
+        return "ClassPojo [overview = " + overview + ", originalLanguage = " + originalLanguage + ", originalTitle = " + originalTitle + ", video = " + video + ", title = " + title + ", genreIds = " + genreIds + ", posterPath = " + posterPath + ", backdropPath = " + backdropPath + ", releaseDate = " + releaseDate + ", voteAverage = " + voteAverage + ", popularity = " + popularity + ", id = " + id + ", adult = " + adult + ", voteCount = " + voteCount + "]";
     }
 }
