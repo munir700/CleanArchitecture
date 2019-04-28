@@ -15,10 +15,16 @@
     <string name="STR_NO">No</string>
 
     <string name="STR_YES">Yes</string>
-
+    <string name="STR_ERROR_FETCHING_DETIAL">Error fetching details, please try again</string>
     <string name="STR_MOVIE_DETAILS">MOVIE DETAILS</string>
     <string name="STR_LOADING_DETAILS">Loading details…</string>
     <string name="STR_READ_MORE">" read more"</string>
     <string name="STR_READ_LESS">" read less"</string>
     <string name="DETAILS">Details</string>
+    <string name="released">Released</string>
+    <string name="tag_line">Tag Line</string>
+    <string name="released_date">Released Date</string>
+    <string name="language">Language</string>
+    <string name="production_country">Production Countries</string>
+    <string name="original_title">Original title</string>
 </resources>

@@ -1,8 +1,12 @@
 package android.assignment.models;
 
+import android.assignment.BR;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+public class Movie extends BaseObservable {
 
     @SerializedName("original_language")
     private String originalLanguage;
@@ -263,6 +267,34 @@ public class Movie {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getProductionCounties() {
+        StringBuilder builder = new StringBuilder();
+        if (productionCountries != null) {
+            int length = productionCountries.length;
+            for (int index = 0; index < length; index++) {
+                builder.append(productionCountries[index].getName());
+                if (index != length - 1) {
+                    builder.append(", ");
+                }
+            }
+        }
+        return builder.toString();
+    }
+
+    public String getSpokenLanguage() {
+        StringBuilder builder = new StringBuilder();
+        if (spokenLanguages != null) {
+            int length = spokenLanguages.length;
+            for (int index = 0; index < length; index++) {
+                builder.append(spokenLanguages[index].getName());
+                if (index != length - 1) {
+                    builder.append(", ");
+                }
+            }
+        }
+        return builder.toString();
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.assignment.R;
 import android.assignment.base.BaseActivity;
 import android.assignment.databinding.ActivityMovieDetailBinding;
+import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
 import android.assignment.viewModels.MovieDetailViewModel;
@@ -40,7 +41,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     MovieListing movieListing;
     Movie movieDetail;
     SimpleExoPlayer player;
-    private boolean playWhenReady = true;
+    private boolean playWhenReady = false;
     private int currentWindow;
     private long playbackPosition;
 
@@ -55,9 +56,30 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
         return R.layout.activity_movie_detail;
     }
 
+    @Override
+    public void onObserve(ViewModelEventsEnum event, Object eventMessage) {
+        switch (event) {
+            case NO_INTERNET_CONNECTION:
+                binding.progressBarTitle.setVisibility(View.GONE);
+                binding.tvDescription.setText(getString(R.string.STR_ERROR_FETCHING_DETIAL));
+                break;
+            case ON_API_REQUEST_FAILURE:
+                binding.progressBarTitle.setVisibility(View.GONE);
+                binding.tvDescription.setText(getString(R.string.STR_ERROR_FETCHING_DETIAL));
+                break;
+            case ON_API_CALL_START:
+                binding.progressBarTitle.setVisibility(View.VISIBLE);
+                break;
+            case ON_API_CALL_STOP:
+                binding.progressBarTitle.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+    }
 
     public static void openActivityForResult(Activity activity,
-                                             MovieListing movieListing,int requestCode, int listingPosition) {
+                                             MovieListing movieListing, int requestCode, int listingPosition) {
 
         Intent intent = new Intent(activity, MovieDetailActivity.class);
         intent.putExtra(MOVIES_INTENT_KEY, movieListing);
@@ -69,7 +91,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
         movieListing = (MovieListing) getIntent().getSerializableExtra(MOVIES_INTENT_KEY);
     }
 
@@ -105,26 +126,19 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
             @Override
             public void onChanged(@Nullable Movie movie) {
                 movieDetail = movie;
+                binding.setMovie(movieDetail);
+                binding.rlDetails.setGravity(View.VISIBLE);
                 initializePlayer();
             }
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (Util.SDK_INT > 23) {
-            loadMovieDetail();
-        }
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        hideSystemUi();
-        if ((Util.SDK_INT <= 23 || player == null)) {
-            loadMovieDetail();
-        }
+        //hideSystemUi();
+        loadMovieDetail();
     }
 
     private void initializePlayer() {
