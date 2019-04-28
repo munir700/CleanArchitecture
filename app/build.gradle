@@ -28,6 +28,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 def supportLibraryVersion = '27.1.1'

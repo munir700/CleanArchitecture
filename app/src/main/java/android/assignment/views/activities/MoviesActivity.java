@@ -101,7 +101,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             listingAdapter = new ListingAdapter(MoviesActivity.this, viewModel.getAppManager(), viewModel.listData, new ListingAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position, MovieListing movie, RowListingsBinding binding) {
-                    MovieDetailActivity.openActivityForResult(MoviesActivity.this, movie, null, REQUEST_CODE, position);
+                    MovieDetailActivity.openActivityForResult(MoviesActivity.this, movie,  REQUEST_CODE, position);
                 }
             });
 

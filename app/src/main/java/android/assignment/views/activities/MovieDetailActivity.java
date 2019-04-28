@@ -57,25 +57,12 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
 
 
     public static void openActivityForResult(Activity activity,
-                                             MovieListing movieListing,
-                                             final View thumb, int requestCode, int listingPosition) {
+                                             MovieListing movieListing,int requestCode, int listingPosition) {
 
         Intent intent = new Intent(activity, MovieDetailActivity.class);
         intent.putExtra(MOVIES_INTENT_KEY, movieListing);
         intent.putExtra(LISTING_POSITION, listingPosition);
-       /* if (thumb != null) {
-            Pair<View, String> p1;
-            ActivityOptionsCompat options;
-
-            p1 = Pair.create(thumb, activity.getResources()
-                    .getString(R.string.STR_NEWS_DETAILS_TRANSITION));
-            options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                    p1);
-
-            activity.startActivityForResult(intent, requestCode, options.toBundle());
-        } else {*/
         activity.startActivityForResult(intent, requestCode);
-        //}
     }
 
 
@@ -117,8 +104,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
         viewModel.getMovieDetail(movieListing.getId()).observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(@Nullable Movie movie) {
-                // movieDetail = movie;
-                //initializePlayer();
+                movieDetail = movie;
+                initializePlayer();
             }
         });
     }
@@ -150,7 +137,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
 
-        Uri uri = Uri.parse(movieDetail.getHomepage());
+        Uri uri = Uri.parse("https://storage.googleapis.com/exoplayer-test-media-1/mkv/android-screens-lavf-56.36.100-aac-avc-main-1280x720.mkv");
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource, true, false);
     }

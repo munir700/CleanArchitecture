@@ -3,6 +3,7 @@ package android.assignment.repositories;
 import android.arch.lifecycle.MutableLiveData;
 import android.assignment.BuildConfig;
 import android.assignment.R;
+import android.assignment.api.ApiEnvelopeService;
 import android.assignment.api.ApiService;
 import android.assignment.base.BaseNetworkCallBack;
 import android.assignment.base.BaseViewModel;
@@ -23,6 +24,8 @@ public class MoviesRepository {
     @Inject
     ApiService apiService;
 
+    @Inject
+    ApiEnvelopeService apiEnvelopeService;
 
     @Inject
     NetworkUtils networkUtils;
@@ -39,7 +42,7 @@ public class MoviesRepository {
             if (listCall != null)
                 listCall.cancel();
 
-            listCall = apiService.getMovieList(BuildConfig.API_KEY, "en-US", 4);
+            listCall = apiEnvelopeService.getMovieList(BuildConfig.API_KEY, "en-US", 4);
             listCall.enqueue(new BaseNetworkCallBack<List<MovieListing>>(viewModel) {
                 @Override
                 public void onResponse(Call<List<MovieListing>> call, Response<List<MovieListing>> response) {

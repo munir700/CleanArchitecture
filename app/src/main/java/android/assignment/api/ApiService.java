@@ -14,10 +14,6 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("movie/now_playing/")
-    Call<List<MovieListing>> getMovieList(@Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int page);
-
-
     @GET("movie/{movie_id}")
     Call<Movie> getMovieDetail(@Path("movie_id") int movieId, @Query("api_key") String apiKey, @Query("language") String lang);
 

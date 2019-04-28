@@ -1,5 +1,6 @@
 package android.assignment.di.modules;
 
+import android.assignment.api.ApiEnvelopeService;
 import android.assignment.api.ApiHttpClient;
 import android.assignment.api.ApiService;
 import android.assignment.api.converter.ApiConverterFactory;
@@ -25,12 +26,26 @@ public class ApiClientModule {
         Retrofit apiClient = new Retrofit.Builder()
                 .baseUrl(ApiUtils.getApiBaseUrl())
                 .addConverterFactory(new ApiConverterFactory())
-                .addConverterFactory(new ApiEnvelopeConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new ApiHttpClient().getHTTPClient(new HashMap<String, String>()))
                 .build();
 
         return apiClient.create(ApiService.class);
+
+    }
+
+    @Provides
+    @Singleton
+    public ApiEnvelopeService getEnvelopeApiService() {
+
+        Retrofit apiClient = new Retrofit.Builder()
+                .baseUrl(ApiUtils.getApiBaseUrl())
+                .addConverterFactory(new ApiEnvelopeConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(new ApiHttpClient().getHTTPClient(new HashMap<String, String>()))
+                .build();
+
+        return apiClient.create(ApiEnvelopeService.class);
 
     }
 }
