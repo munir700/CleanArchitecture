@@ -3,12 +3,14 @@ package android.assignment.models;
 import android.assignment.BR;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Movie extends BaseObservable implements Serializable {
+public class Movie extends BaseObservable implements Parcelable {
 
     @SerializedName("original_language")
     private String originalLanguage;
@@ -70,6 +72,78 @@ public class Movie extends BaseObservable implements Serializable {
     private String homepage;
 
     private String status;
+
+    protected Movie(Parcel in) {
+        originalLanguage = in.readString();
+        imdbId = in.readString();
+        video = in.readString();
+        title = in.readString();
+        backdropPath = in.readString();
+        revenue = in.readString();
+        popularity = in.readString();
+        productionCountries = in.createTypedArray(ProductionCountries.CREATOR);
+        id = in.readString();
+        voteCount = in.readString();
+        budget = in.readString();
+        overview = in.readString();
+        originalTitle = in.readString();
+        runtime = in.readString();
+        poster_path = in.readString();
+        spokenLanguages = in.createTypedArray(SpokenLanguages.CREATOR);
+        productionCompanies = in.createTypedArray(ProductionCompanies.CREATOR);
+        releaseDate = in.readString();
+        voteAverage = in.readString();
+        belongsToCollection = in.readString();
+        tagline = in.readString();
+        adult = in.readString();
+        homepage = in.readString();
+        status = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(originalLanguage);
+        dest.writeString(imdbId);
+        dest.writeString(video);
+        dest.writeString(title);
+        dest.writeString(backdropPath);
+        dest.writeString(revenue);
+        dest.writeString(popularity);
+        dest.writeTypedArray(productionCountries, flags);
+        dest.writeString(id);
+        dest.writeString(voteCount);
+        dest.writeString(budget);
+        dest.writeString(overview);
+        dest.writeString(originalTitle);
+        dest.writeString(runtime);
+        dest.writeString(poster_path);
+        dest.writeTypedArray(spokenLanguages, flags);
+        dest.writeTypedArray(productionCompanies, flags);
+        dest.writeString(releaseDate);
+        dest.writeString(voteAverage);
+        dest.writeString(belongsToCollection);
+        dest.writeString(tagline);
+        dest.writeString(adult);
+        dest.writeString(homepage);
+        dest.writeString(status);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getOriginalLanguage() {
         return originalLanguage;

@@ -1,9 +1,10 @@
 package android.assignment.views.activities;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
+import android.assignment.BuildConfig;
 import android.assignment.R;
+import android.assignment.adapter.PhotoSliderAdapter;
 import android.assignment.base.BaseActivity;
 import android.assignment.databinding.ActivityMovieDetailBinding;
 import android.assignment.enums.ViewModelEventsEnum;
@@ -11,20 +12,22 @@ import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
 import android.assignment.viewModels.MovieDetailViewModel;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+
+import java.util.ArrayList;
 
 public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, ActivityMovieDetailBinding> {
 
@@ -35,10 +38,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
 
     MovieListing movieListing;
     Movie movieDetail;
-    SimpleExoPlayer player;
-    private boolean playWhenReady = false;
-    private int currentWindow;
-    private long playbackPosition;
 
     public static void openActivityForResult(Activity activity,
                                              MovieListing movieListing, int requestCode, int listingPosition) {
@@ -85,33 +84,33 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         movieListing = (MovieListing) getIntent().getSerializableExtra(MOVIES_INTENT_KEY);
+        loadMovieDetail();
+        initImagePlaceHolder();
     }
 
+    private void initImagePlaceHolder() {
+        binding.ivPlaceholder.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (Util.SDK_INT <= 23) {
-            releasePlayer();
-        }
-    }
+        String imgUrl = BuildConfig.IMG_BASE_URL + movieListing.getPosterPath();
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
-    }
+        RequestOptions imageOptions = new RequestOptions()
+                .placeholder(R.drawable.img_loading_pics)
+                .error(R.drawable.no_image_placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        Glide.with(this)
+                .load(imgUrl)
+                .apply(imageOptions)
+                .into(binding.ivPlaceholder);
+        binding.ivPlaceholder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (movieDetail != null) {
+                    openImageSilderActivity();
+                }
+            }
+        });
 
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-        binding.epVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     private void loadMovieDetail() {
@@ -121,49 +120,14 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
                 movieDetail = movie;
                 binding.setMovie(movieDetail);
                 binding.rlDetails.setGravity(View.VISIBLE);
-                initializePlayer();
             }
         });
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //hideSystemUi();
-        loadMovieDetail();
+    private void openImageSilderActivity() {
+        Intent fullMediaqIntent = new Intent(this, ImageSliderActivity.class);
+        fullMediaqIntent.putExtra(ImageSliderActivity.MOVIE, movieDetail);
+        startActivityForResult(fullMediaqIntent, REQUEST_CODE);
     }
-
-
-    private void initializePlayer() {
-        player = ExoPlayerFactory.newSimpleInstance(
-                new DefaultRenderersFactory(this),
-                new DefaultTrackSelector(), new DefaultLoadControl());
-
-        binding.epVideoView.setPlayer(player);
-
-        player.setPlayWhenReady(playWhenReady);
-        player.seekTo(currentWindow, playbackPosition);
-
-        Uri uri = Uri.parse("https://storage.googleapis.com/exoplayer-test-media-1/mkv/android-screens-lavf-56.36.100-aac-avc-main-1280x720.mkv");
-        MediaSource mediaSource = buildMediaSource(uri);
-        player.prepare(mediaSource, true, false);
-    }
-
-    private MediaSource buildMediaSource(Uri uri) {
-        return new ExtractorMediaSource.Factory(
-                new DefaultHttpDataSourceFactory("exoplayer-codelab")).
-                createMediaSource(uri);
-    }
-
-    private void releasePlayer() {
-        if (player != null) {
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
-            player.release();
-            player = null;
-        }
-    }
-
 }

@@ -27,9 +27,7 @@ import com.bumptech.glide.request.target.Target;
 
 public class PhotoSliderAdapter extends PagerAdapter {
 
-    public interface OnClickListener {
-        void onItemClick(int position, View view);
-    }
+
 
     private Activity context;
     private ProductionCompanies[] images;

@@ -2,6 +2,7 @@ package android.assignment.di.modules;
 
 
 import android.assignment.SplashActivity;
+import android.assignment.views.activities.ImageSliderActivity;
 import android.assignment.views.activities.MovieDetailActivity;
 import android.assignment.views.activities.MoviesActivity;
 
@@ -16,4 +17,7 @@ public abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
     abstract MovieDetailActivity movieDetailActivity();
+
+    @ContributesAndroidInjector
+    abstract ImageSliderActivity imageSliderActivity();
 }
