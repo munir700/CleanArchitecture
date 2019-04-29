@@ -12,7 +12,13 @@
         android:background="@color/black"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar_with_title_and_back_button"
+            app:icon='@{@drawable/ic_back_white}' />
+
         <android.support.constraint.ConstraintLayout
+            android:layout_below="@+id/layout_toolbar"
             android:id="@+id/viewPager_contraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,7 +27,7 @@
 
             <com.google.android.exoplayer2.ui.PlayerView
                 android:id="@+id/ep_video_view"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +36,7 @@
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:fitsSystemWindows="true"
                 android:transitionName="@string/STR_DETAILS_TRANSITION"
@@ -49,7 +55,7 @@
                 android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="@+id/viewPager"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/viewPager"
                 app:srcCompat="@drawable/ic_right_arrow" />
 
             <ImageButton
@@ -62,7 +68,7 @@
                 android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/viewPager"
                 app:srcCompat="@drawable/ic_right_arrow" />
 
             <android.support.constraint.Guideline
@@ -70,14 +76,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5" />
+                app:layout_constraintGuide_percent="0.4" />
 
         </android.support.constraint.ConstraintLayout>
 
-        <include
-            android:id="@+id/layout_toolbar"
-            layout="@layout/toolbar_with_title_and_back_button"
-            app:icon='@{@drawable/ic_back_white}' />
 
     </RelativeLayout>
 </layout>

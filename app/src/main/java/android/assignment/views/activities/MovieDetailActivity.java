@@ -91,18 +91,18 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     private void initImagePlaceHolder() {
         binding.ivPlaceholder.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        String imgUrl = BuildConfig.IMG_BASE_URL + movieListing.getPosterPath();
+        String imgUrl = BuildConfig.IMG_BASE_URL_LARGE + movieListing.getPosterPath();
 
         RequestOptions imageOptions = new RequestOptions()
                 .placeholder(R.drawable.img_loading_pics)
-                .error(R.drawable.no_image_placeholder)
+                .error(R.drawable.img_loading_pics)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
         Glide.with(this)
                 .load(imgUrl)
                 .apply(imageOptions)
                 .into(binding.ivPlaceholder);
-        binding.ivPlaceholder.setOnClickListener(new View.OnClickListener() {
+        binding.moreMediaTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (movieDetail != null) {

@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,8 @@ public class PhotoSliderAdapter extends PagerAdapter {
 
     private RequestOptions imageOptions;
 
-    private PhotoSliderCallBack listener;
 
-    public void setPhotoSliderCallBackListener(PhotoSliderCallBack listener) {
-        this.listener = listener;
+    public void setPhotoSliderCallBackListener() {
     }
 
     public void setPhotos(ProductionCompanies[] images) {
@@ -56,7 +55,7 @@ public class PhotoSliderAdapter extends PagerAdapter {
         this.images = images;
         imageOptions = new RequestOptions()
                 .placeholder(R.drawable.img_loading_pics)
-                .error(R.drawable.no_image_placeholder)
+                .error(R.drawable.img_loading_pics)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
     }
@@ -91,35 +90,21 @@ public class PhotoSliderAdapter extends PagerAdapter {
 
     private void initializeView(final ViewGroup container, final RowItemPhotosSliderBinding binding, final int position) {
 
-
         ProductionCompanies productionCompany = images[position];
-
-        binding.ivPlaceholder.setVisibility(View.VISIBLE);
-        binding.progressBar.setVisibility(View.GONE);
 
         binding.ivPlaceholder.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        String imgUrl = BuildConfig.IMG_BASE_URL + productionCompany.getLogoPath();
+        String imgUrl = BuildConfig.IMG_BASE_URL_LARGE + productionCompany.getLogoPath();
+        Log.e("imgUrl", imgUrl);
 
-        Glide.with(context).applyDefaultRequestOptions(imageOptions)
+        RequestOptions imageOptions = new RequestOptions()
+                .placeholder(R.drawable.img_loading_pics)
+                .error(R.drawable.img_loading_pics)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        Glide.with(context)
                 .load(imgUrl)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        if (PhotoSliderAdapter.this.listener != null)
-                            PhotoSliderAdapter.this.listener.readyForTransition();
-
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        if (PhotoSliderAdapter.this.listener != null)
-                            PhotoSliderAdapter.this.listener.readyForTransition();
-
-                        return false;
-                    }
-                })
+                .apply(imageOptions)
                 .into(binding.ivPlaceholder);
 
         container.addView(binding.getRoot());
@@ -135,10 +120,6 @@ public class PhotoSliderAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
 
-    }
-
-    public interface PhotoSliderCallBack {
-        void readyForTransition();
     }
 
 

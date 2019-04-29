@@ -102,14 +102,7 @@ public class ImageSliderActivity extends BaseActivity<BaseViewModel, ActivityIma
         } else {
             mySliderPagerAdapter.setPhotos(productionCompanies);
         }
-        mySliderPagerAdapter.setPhotoSliderCallBackListener(new PhotoSliderAdapter.PhotoSliderCallBack() {
-            @Override
-            public void readyForTransition() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startPostponedEnterTransition();
-                }
-            }
-        });
+
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
