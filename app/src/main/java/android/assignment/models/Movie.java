@@ -6,7 +6,9 @@ import android.databinding.Bindable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Movie extends BaseObservable {
+import java.io.Serializable;
+
+public class Movie extends BaseObservable implements Serializable {
 
     @SerializedName("original_language")
     private String originalLanguage;

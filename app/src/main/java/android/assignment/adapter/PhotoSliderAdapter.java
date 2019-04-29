@@ -36,7 +36,6 @@ public class PhotoSliderAdapter extends PagerAdapter {
 
     private RequestOptions imageOptions;
 
-    private OnClickListener onClickListener;
     private PhotoSliderCallBack listener;
 
     public void setPhotoSliderCallBackListener(PhotoSliderCallBack listener) {
@@ -54,10 +53,9 @@ public class PhotoSliderAdapter extends PagerAdapter {
     }
 
     public PhotoSliderAdapter(Activity context,
-                              ProductionCompanies[] images, OnClickListener onClickListener) {
+                              ProductionCompanies[] images) {
         this.context = context;
         this.images = images;
-        this.onClickListener = onClickListener;
         imageOptions = new RequestOptions()
                 .placeholder(R.drawable.img_loading_pics)
                 .error(R.drawable.no_image_placeholder)
@@ -131,15 +129,6 @@ public class PhotoSliderAdapter extends PagerAdapter {
             binding.ivPlaceholder.setTransitionName("PROP_DETAILS_TRANSITION" + position);
         }
 
-
-        binding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onClickListener != null) {
-                    onClickListener.onItemClick(position, view);
-                }
-            }
-        });
 
     }
 
