@@ -88,6 +88,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
         initImagePlaceHolder();
     }
 
+    public void onClose(View view){
+        onBackPressed();
+    }
+
     private void initImagePlaceHolder() {
         binding.ivPlaceholder.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -123,7 +127,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
             }
         });
     }
-
 
     private void openImageSilderActivity() {
         Intent fullMediaqIntent = new Intent(this, ImageSliderActivity.class);
