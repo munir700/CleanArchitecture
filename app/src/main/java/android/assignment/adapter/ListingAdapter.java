@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
@@ -144,7 +143,7 @@ public class ListingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     class FooterListingHolder extends RecyclerView.ViewHolder {
-        LinearLayout proressBar;
+        ProgressBar proressBar;
 
         public FooterListingHolder(View itemView) {
             super(itemView);
