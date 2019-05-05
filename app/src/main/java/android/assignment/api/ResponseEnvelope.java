@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ResponseEnvelope<T> implements Serializable {
 
     int id;
-    int page;
+    public int page;
 
     @SerializedName("status_code")
     public int status;

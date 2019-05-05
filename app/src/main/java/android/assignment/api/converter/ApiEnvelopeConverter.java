@@ -48,6 +48,8 @@ public class ApiEnvelopeConverter<T> implements Converter<ResponseBody, T> {
                 ResponseEnvelope<T> envelopeList = delegate.convert(updateResponseBody);
                 if (envelopeList.listItem instanceof ArrayListWithTotalResultCount) {
                     ((ArrayListWithTotalResultCount) envelopeList.listItem).setTotalNumberOfResults(envelopeList.totalResults);
+                    ((ArrayListWithTotalResultCount) envelopeList.listItem).setPage(envelopeList.page);
+                    ((ArrayListWithTotalResultCount) envelopeList.listItem).setTotalNumberOfPages(envelopeList.totalPages);
                 }
                 return envelopeList.listItem;
             } else {
