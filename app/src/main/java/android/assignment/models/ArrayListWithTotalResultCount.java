@@ -7,6 +7,8 @@ public class ArrayListWithTotalResultCount<T> extends ArrayList<T> {
 
     int totalNumberOfResults;
 
+    int totalNumberOfPages;
+
     int page;
 
 
@@ -26,4 +28,14 @@ public class ArrayListWithTotalResultCount<T> extends ArrayList<T> {
     public void setPage(int page) {
         this.page = page;
     }
+
+
+    public int getTotalNumberOfPages() {
+        return totalNumberOfPages;
+    }
+
+    public void setTotalNumberOfPages(int totalNumberOfPages) {
+        this.totalNumberOfPages = totalNumberOfPages;
+    }
+
 }

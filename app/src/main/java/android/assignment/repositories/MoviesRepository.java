@@ -38,13 +38,13 @@ public class MoviesRepository {
 
     }
 
-    public MutableLiveData<ArrayListWithTotalResultCount<MovieListing>> getMoviesList(final BaseViewModel viewModel, Call<ArrayListWithTotalResultCount<MovieListing>> listCall, final String playingType) {
+    public MutableLiveData<ArrayListWithTotalResultCount<MovieListing>> getMoviesList(final BaseViewModel viewModel, Call<ArrayListWithTotalResultCount<MovieListing>> listCall, final String playingType, int pageSize) {
 
         final MutableLiveData<ArrayListWithTotalResultCount<MovieListing>> moviesLiveData = new MutableLiveData<>();
         if (networkUtils.isConnectedToInternet()) {
             if (listCall != null)
                 listCall.cancel();
-            listCall = apiEnvelopeService.getMovieList(playingType, BuildConfig.API_KEY, "en-US", 4);
+            listCall = apiEnvelopeService.getMovieList(playingType, BuildConfig.API_KEY, "en-US", pageSize);
             listCall.enqueue(new BaseNetworkCallBack<ArrayListWithTotalResultCount<MovieListing>>(viewModel) {
                 @Override
                 public void onResponse(Call<ArrayListWithTotalResultCount<MovieListing>> call, Response<ArrayListWithTotalResultCount<MovieListing>> response) {

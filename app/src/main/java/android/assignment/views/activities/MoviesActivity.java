@@ -19,9 +19,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +35,6 @@ import java.util.List;
 import static android.assignment.views.activities.MovieDetailActivity.REQUEST_CODE;
 
 public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesBinding> {
-
 
     private ListingAdapter listingAdapter;
 
@@ -62,7 +64,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
                 }
                 binding.pullToRefresh.setVisibility(View.GONE);
                 binding.constraintError.setVisibility(View.VISIBLE);
-                viewModel.listData.setValue(new ArrayList<MovieListing>());
+                viewModel.mutableLiveData.setValue(new ArrayListWithTotalResultCount<MovieListing>());
                 listingAdapter.setData(new ArrayList<MovieListing>());
                 viewModel.setErrorResponse(new ErrorResponse.Builder(ErrorResponseEnum.NO_DATA_RECEIVED).build());
                 break;
@@ -73,7 +75,9 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             case ON_API_CALL_START:
                 binding.pullToRefresh.setVisibility(View.VISIBLE);
                 binding.constraintError.setVisibility(View.GONE);
-                showProgress();
+                if (viewModel.isToClearLastLoadedContent()) {
+                    showProgress();
+                }
                 break;
             case ON_API_CALL_STOP:
                 hideProgress();
@@ -96,6 +100,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
         binding.setVm(viewModel);
         binding.setCountText(viewModel.getMovieCount());
         initUI();
+        initScrollListener();
         loadMovies();
     }
 
@@ -103,7 +108,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
 
         try {
             ((SimpleItemAnimator) binding.recyclerResults.getItemAnimator()).setSupportsChangeAnimations(false);
-            listingAdapter = new ListingAdapter(MoviesActivity.this, viewModel.getAppManager(), viewModel.listData, new ListingAdapter.OnClickListener() {
+            listingAdapter = new ListingAdapter(MoviesActivity.this, viewModel.getAppManager(), viewModel.mutableLiveData, new ListingAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position, MovieListing movie, RowListingsBinding binding) {
                     Movie movieDetail = new Movie();
@@ -118,14 +123,17 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             binding.searchAgainBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    viewModel.setToClearLastLoadedContent(false);
                     loadMovies();
                 }
             });
+
 
             binding.pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     binding.pullToRefresh.setRefreshing(false);
+                    viewModel.setToClearLastLoadedContent(true);
                     loadMovies();
                 }
             });
@@ -144,6 +152,35 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
 
     }
 
+    private void initScrollListener() {
+        binding.recyclerResults.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                GridLayoutManager linearLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+
+                if (viewModel.isLastPageLoaded()) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == listingAdapter.getItemCount() - 1) {
+                        //bottom of list!
+                        viewModel.setToClearLastLoadedContent(false);
+                        listingAdapter.setFooterVisibility(View.VISIBLE);
+                        loadMovies();
+                    }
+                } else {
+                    listingAdapter.setFooterVisibility(View.GONE);
+                }
+            }
+        });
+
+
+    }
+
     private void loadMovies() {
         viewModel.getMovies().observe(this, new Observer<ArrayListWithTotalResultCount<MovieListing>>() {
             @Override
@@ -155,7 +192,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
 
     private void filterMovies(final ArrayListWithTotalResultCount<MovieListing> movies) {
         List<MovieListing> movieList = viewModel.removeAdultMovies(movies);
-        viewModel.setMovieCount(viewModel.getPreferenceHandler().getLastSelectedSortTitle() + " # " + movies.getTotalNumberOfResults());
+        viewModel.setMovieCount(String.valueOf(movies.getTotalNumberOfResults()));
         listingAdapter.setData(movieList);
 
     }
@@ -172,6 +209,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             public void onDismiss(DialogInterface dialogInterface) {
                 int selection = propertySortDialog.getSelectedPosition();
                 if (selection != SortDialog.INITIAL_POSITION) {
+                    viewModel.setToClearLastLoadedContent(false);
                     loadMovies();
                 }
 

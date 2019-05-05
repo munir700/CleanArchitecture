@@ -5,14 +5,19 @@ import android.assignment.interfaces.ViewModelCallBackObserver;
 import android.assignment.managers.AppManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
+
+import retrofit2.Call;
 
 /**
  * Created by Munir Ahmad.
  */
 
 public class BaseViewModel extends ObservableViewModel {
+
+    protected List<Call> calls = new ArrayList<>();
 
     @Inject
     protected AppManager appManager;
