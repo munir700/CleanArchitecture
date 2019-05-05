@@ -11,6 +11,9 @@
             name="countText"
             type="android.databinding.ObservableField&lt;String&gt;" />
 
+        <variable
+            name="playingType"
+            type="android.databinding.ObservableField&lt;String&gt;" />
 
         <variable
             name="vm"
@@ -97,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:text='@{vm.getLastSelectedSortTitle()}'
+                    android:text='@{playingType}'
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/count_tv_tb"
                     app:layout_constraintStart_toEndOf="@+id/count_tv_tb"

@@ -24,6 +24,8 @@ import retrofit2.Call;
 public class MovieViewModel extends BaseViewModel {
 
     private ObservableField<String> movieCount = new ObservableField<>();
+    private ObservableField<String> playType = new ObservableField<>();
+
     public List<MovieListing> listMovies = new ArrayList<>();
     public MutableLiveData<List<MovieListing>> mutableLiveData = new MutableLiveData<>();
     private ObservableInt pageNo = new ObservableInt(0);
@@ -65,6 +67,14 @@ public class MovieViewModel extends BaseViewModel {
         this.movieCount.set(movieCount);
     }
 
+
+    public ObservableField<String> getPlayType() {
+        return playType;
+    }
+
+    public void setPlayType(String playType) {
+        this.playType.set(playType);
+    }
 
     public PreferenceHandler getPreferenceHandler() {
         return preferenceHandler;
