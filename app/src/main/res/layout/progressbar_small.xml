@@ -5,17 +5,10 @@
 
     </data>
 
-    <LinearLayout
+    <ProgressBar
         android:id="@+id/progress_small"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Large"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-
-        <ProgressBar
-
-            style="@android:style/Widget.Holo.Light.ProgressBar.Large"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_36sdp"
-            android:foregroundGravity="center" />
-    </LinearLayout>
+        android:layout_height="@dimen/_40sdp"
+        android:visibility="gone" />
 </layout>
