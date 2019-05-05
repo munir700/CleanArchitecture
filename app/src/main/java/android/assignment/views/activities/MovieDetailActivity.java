@@ -79,9 +79,15 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
         movieDetail = getIntent().getParcelableExtra(MOVIES_INTENT_KEY);
         loadMovieDetail();
         initImagePlaceHolder();
+        binding.tvDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadMovieDetail();
+            }
+        });
     }
 
-    public void onClose(View view){
+    public void onClose(View view) {
         onBackPressed();
     }
 
