@@ -99,6 +99,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
         super.onCreate(savedInstanceState);
         binding.setVm(viewModel);
         binding.setCountText(viewModel.getMovieCount());
+        binding.setPlayingType(viewModel.getPlayType());
         initUI();
         initScrollListener();
         loadMovies();
@@ -193,6 +194,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
     private void filterMovies(final ArrayListWithTotalResultCount<MovieListing> movies) {
         List<MovieListing> movieList = viewModel.removeAdultMovies(movies);
         viewModel.setMovieCount(String.valueOf(movies.getTotalNumberOfResults()));
+        viewModel.setPlayType(viewModel.getLastSelectedSortTitle());
         listingAdapter.setData(movieList);
 
     }
