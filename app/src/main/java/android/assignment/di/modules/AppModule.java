@@ -2,6 +2,7 @@ package android.assignment.di.modules;
 
 import android.app.Application;
 import android.assignment.managers.AppManager;
+import android.assignment.preferences.PreferenceHandler;
 import android.assignment.utils.NetworkUtils;
 
 import javax.inject.Singleton;
@@ -14,8 +15,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    AppManager providesAppManager(Application application) {
-        AppManager appManager = new AppManager(application);
+    AppManager providesAppManager(Application application, PreferenceHandler preferenceHandler) {
+        AppManager appManager = new AppManager(application, preferenceHandler);
         return appManager;
     }
 
@@ -26,4 +27,5 @@ public class AppModule {
         NetworkUtils networkUtils = new NetworkUtils(application);
         return networkUtils;
     }
+
 }

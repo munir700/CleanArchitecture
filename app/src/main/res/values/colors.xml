@@ -16,4 +16,6 @@
     <color name="text_color_4">#898989</color>
     <color name="bg_color_1">#B0D6F4</color>
     <color name="transparent">#00000000</color>
+    <color name="grey_dark_normal">#FFE9E7E7</color>
+    <color name="price_range_bg_color">#FCFCFC</color>
 </resources>

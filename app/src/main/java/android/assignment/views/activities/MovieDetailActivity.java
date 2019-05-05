@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.assignment.BuildConfig;
 import android.assignment.R;
-import android.assignment.adapter.PhotoSliderAdapter;
 import android.assignment.base.BaseActivity;
 import android.assignment.databinding.ActivityMovieDetailBinding;
 import android.assignment.enums.ViewModelEventsEnum;
@@ -12,7 +11,6 @@ import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
 import android.assignment.viewModels.MovieDetailViewModel;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -20,30 +18,25 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
-import java.util.ArrayList;
 
 public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, ActivityMovieDetailBinding> {
 
     public static final int REQUEST_CODE = 100;
     public final static String LISTING_POSITION = "listing_index";
-    public final static String MOVIES_INTENT_KEY = "movie_listing";
+    public final static String MOVIES_INTENT_KEY = "movie_detail";
 
 
-    MovieListing movieListing;
     Movie movieDetail;
 
     public static void openActivityForResult(Activity activity,
-                                             MovieListing movieListing, int requestCode, int listingPosition) {
+                                             Movie movie, int requestCode, int listingPosition) {
 
         Intent intent = new Intent(activity, MovieDetailActivity.class);
-        intent.putExtra(MOVIES_INTENT_KEY, movieListing);
+        intent.putExtra(MOVIES_INTENT_KEY, movie);
         intent.putExtra(LISTING_POSITION, listingPosition);
         activity.startActivityForResult(intent, requestCode);
     }
@@ -83,7 +76,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        movieListing = (MovieListing) getIntent().getSerializableExtra(MOVIES_INTENT_KEY);
+        movieDetail = getIntent().getParcelableExtra(MOVIES_INTENT_KEY);
         loadMovieDetail();
         initImagePlaceHolder();
     }
@@ -95,7 +88,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     private void initImagePlaceHolder() {
         binding.ivPlaceholder.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        String imgUrl = BuildConfig.IMG_BASE_URL_LARGE + movieListing.getPosterPath();
+        String imgUrl = BuildConfig.IMG_BASE_URL_LARGE + movieDetail.getPosterPath();
 
         RequestOptions imageOptions = new RequestOptions()
                 .placeholder(R.drawable.img_loading_pics)
@@ -118,7 +111,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     }
 
     private void loadMovieDetail() {
-        viewModel.getMovieDetail(movieListing.getId()).observe(this, new Observer<Movie>() {
+        viewModel.getMovieDetail(movieDetail.getId()).observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(@Nullable Movie movie) {
                 movieDetail = movie;

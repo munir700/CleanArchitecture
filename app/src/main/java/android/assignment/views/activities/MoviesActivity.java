@@ -10,9 +10,12 @@ import android.assignment.enums.ErrorResponseEnum;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
+import android.assignment.ui.SortDialog;
+import android.assignment.utils.AppConstants;
 import android.assignment.utils.ErrorResponse;
 import android.assignment.viewModels.MovieViewModel;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +31,7 @@ import java.util.List;
 import static android.assignment.views.activities.MovieDetailActivity.REQUEST_CODE;
 
 public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesBinding> {
+
 
     private ListingAdapter listingAdapter;
 
@@ -101,7 +105,9 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             listingAdapter = new ListingAdapter(MoviesActivity.this, viewModel.getAppManager(), viewModel.listData, new ListingAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position, MovieListing movie, RowListingsBinding binding) {
-                    MovieDetailActivity.openActivityForResult(MoviesActivity.this, movie,  REQUEST_CODE, position);
+                    Movie movieDetail = new Movie();
+                    movieDetail.toMovie(movie);
+                    MovieDetailActivity.openActivityForResult(MoviesActivity.this, movieDetail, REQUEST_CODE, position);
                 }
             });
 
@@ -123,6 +129,13 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
                 }
             });
 
+            binding.sortIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openSortDialog(v);
+                }
+            });
+
 
         } catch (Exception e) {
             Log.e("Exception", "Error while initialize UI components and message =" + e.getMessage());
@@ -135,8 +148,28 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             @Override
             public void onChanged(@Nullable List<MovieListing> movies) {
                 List<MovieListing> movieList = movies;
-                viewModel.setMovieCount("Movies Count:- " + movieList.size());
+                viewModel.setMovieCount(viewModel.getPreferenceHandler().getLastSelectedSortTitle() + " # " + movieList.size());
                 listingAdapter.setData(movieList);
+            }
+        });
+    }
+
+    public void openSortDialog(View v) {
+
+        final SortDialog propertySortDialog = new SortDialog(MoviesActivity.this, AppConstants.moviesSortModelList, viewModel.getPreferenceHandler());
+        propertySortDialog.setCancelable(true);
+        if (propertySortDialog.getWindow() != null)
+            propertySortDialog.getWindow().getAttributes().windowAnimations = R.style.dialogAnimation;
+        propertySortDialog.show();
+        propertySortDialog.getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        propertySortDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                int selection = propertySortDialog.getSelectedPosition();
+                if (selection != SortDialog.INITIAL_POSITION) {
+                    loadMovies();
+                }
+
             }
         });
     }

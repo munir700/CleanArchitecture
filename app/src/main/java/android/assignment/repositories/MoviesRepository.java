@@ -35,14 +35,14 @@ public class MoviesRepository {
 
     }
 
-    public MutableLiveData<List<MovieListing>> getMoviesList(final BaseViewModel viewModel, Call<List<MovieListing>> listCall) {
+    public MutableLiveData<List<MovieListing>> getMoviesList(final BaseViewModel viewModel, Call<List<MovieListing>> listCall, final String playingType) {
 
         final MutableLiveData<List<MovieListing>> moviesLiveData = new MutableLiveData<>();
         if (networkUtils.isConnectedToInternet()) {
             if (listCall != null)
                 listCall.cancel();
 
-            listCall = apiEnvelopeService.getMovieList(BuildConfig.API_KEY, "en-US", 4);
+            listCall = apiEnvelopeService.getMovieList(playingType, BuildConfig.API_KEY, "en-US", 4);
             listCall.enqueue(new BaseNetworkCallBack<List<MovieListing>>(viewModel) {
                 @Override
                 public void onResponse(Call<List<MovieListing>> call, Response<List<MovieListing>> response) {
@@ -52,10 +52,6 @@ public class MoviesRepository {
                     }
                 }
 
-                @Override
-                public void onFailure(Call<List<MovieListing>> call, Throwable throwable) {
-                    super.onFailure(call, throwable);
-                }
             });
 
         } else {
@@ -72,7 +68,7 @@ public class MoviesRepository {
             if (listCall != null)
                 listCall.cancel();
 
-            listCall = apiService.getMovieDetail(Integer.valueOf(movieId), BuildConfig.API_KEY, "en-US" );
+            listCall = apiService.getMovieDetail(Integer.valueOf(movieId), BuildConfig.API_KEY, "en-US");
             listCall.enqueue(new BaseNetworkCallBack<Movie>(viewModel) {
                 @Override
                 public void onResponse(Call<Movie> call, Response<Movie> response) {
@@ -82,10 +78,6 @@ public class MoviesRepository {
                     }
                 }
 
-                @Override
-                public void onFailure(Call<Movie> call, Throwable throwable) {
-                    super.onFailure(call, throwable);
-                }
             });
 
         } else {

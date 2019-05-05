@@ -2,6 +2,7 @@ package android.assignment.managers;
 
 import android.app.Application;
 import android.assignment.AppApplication;
+import android.assignment.preferences.PreferenceHandler;
 import android.content.Context;
 
 import com.squareup.leakcanary.RefWatcher;
@@ -13,11 +14,13 @@ public class AppManager {
     private Context appContext;
     private Application application;
     private RefWatcher refWatcher;
+    private PreferenceHandler preferenceHandler;
 
     @Inject
-    public AppManager(Application application) {
+    public AppManager(Application application, PreferenceHandler preferenceHandler) {
         this.application = application;
         appContext = application.getApplicationContext();
+        this.preferenceHandler = preferenceHandler;
     }
 
     public Context getContext() {

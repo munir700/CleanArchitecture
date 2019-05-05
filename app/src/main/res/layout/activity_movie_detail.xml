@@ -64,7 +64,7 @@
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginBottom="@dimen/_3sdp"
                             android:padding="@dimen/_8sdp"
-                            android:text="@string/more_media"
+                            android:text="@string/STR_MORE_MEDIA"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_13ssp" />
                     </RelativeLayout>

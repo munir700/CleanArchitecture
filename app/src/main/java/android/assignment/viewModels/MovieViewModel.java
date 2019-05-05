@@ -5,6 +5,7 @@ import android.assignment.BR;
 import android.assignment.base.BaseViewModel;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
+import android.assignment.preferences.PreferenceHandler;
 import android.assignment.repositories.MoviesRepository;
 import android.assignment.utils.ErrorResponse;
 import android.databinding.Bindable;
@@ -26,6 +27,10 @@ public class MovieViewModel extends BaseViewModel {
 
     Call<List<MovieListing>> listCall;
 
+
+    @Inject
+    PreferenceHandler preferenceHandler;
+
     @Inject
     MoviesRepository moviesRepository;
 
@@ -44,6 +49,10 @@ public class MovieViewModel extends BaseViewModel {
     }
 
 
+    public PreferenceHandler getPreferenceHandler() {
+        return preferenceHandler;
+    }
+
     @Bindable
     public ErrorResponse getErrorResponse() {
         return errorResponse;
@@ -55,7 +64,7 @@ public class MovieViewModel extends BaseViewModel {
     }
 
     public MutableLiveData<List<MovieListing>> getMovies() {
-        return moviesRepository.getMoviesList(this, listCall);
+        return moviesRepository.getMoviesList(this, listCall, preferenceHandler.getLastSelectedSort());
     }
 
     public List<MovieListing> removeAdultMovies(List<MovieListing> listData) {

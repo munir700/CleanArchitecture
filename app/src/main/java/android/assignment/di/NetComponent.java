@@ -7,6 +7,7 @@ import android.assignment.di.modules.ActivityBuilderModule;
 import android.assignment.di.modules.AndroidWorkerInjectionModule;
 import android.assignment.di.modules.ApiClientModule;
 import android.assignment.di.modules.AppModule;
+import android.assignment.di.modules.SharedPreferencesModule;
 import android.assignment.di.modules.ViewModelModule;
 
 import javax.inject.Singleton;
@@ -24,8 +25,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ActivityBuilderModule.class,
         AndroidSupportInjectionModule.class,
         AndroidWorkerInjectionModule.class,
-        ViewModelModule.class
-
+        ViewModelModule.class,
+        SharedPreferencesModule.class
 })
 public interface NetComponent {
 

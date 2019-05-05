@@ -2,13 +2,10 @@ package android.assignment.models;
 
 import android.assignment.BR;
 import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class Movie extends BaseObservable implements Parcelable {
 
@@ -48,7 +45,8 @@ public class Movie extends BaseObservable implements Parcelable {
 
     private String runtime;
 
-    private String poster_path;
+    @SerializedName("poster_path")
+    private String posterPath;
 
     @SerializedName("spoken_languages")
     private SpokenLanguages[] spokenLanguages;
@@ -73,6 +71,10 @@ public class Movie extends BaseObservable implements Parcelable {
 
     private String status;
 
+    public Movie(){
+
+    }
+
     protected Movie(Parcel in) {
         originalLanguage = in.readString();
         imdbId = in.readString();
@@ -88,7 +90,7 @@ public class Movie extends BaseObservable implements Parcelable {
         overview = in.readString();
         originalTitle = in.readString();
         runtime = in.readString();
-        poster_path = in.readString();
+        posterPath = in.readString();
         spokenLanguages = in.createTypedArray(SpokenLanguages.CREATOR);
         productionCompanies = in.createTypedArray(ProductionCompanies.CREATOR);
         releaseDate = in.readString();
@@ -116,7 +118,7 @@ public class Movie extends BaseObservable implements Parcelable {
         dest.writeString(overview);
         dest.writeString(originalTitle);
         dest.writeString(runtime);
-        dest.writeString(poster_path);
+        dest.writeString(posterPath);
         dest.writeTypedArray(spokenLanguages, flags);
         dest.writeTypedArray(productionCompanies, flags);
         dest.writeString(releaseDate);
@@ -265,12 +267,12 @@ public class Movie extends BaseObservable implements Parcelable {
         this.runtime = runtime;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
     public SpokenLanguages[] getSpokenLanguages() {
@@ -375,6 +377,17 @@ public class Movie extends BaseObservable implements Parcelable {
 
     @Override
     public String toString() {
-        return "ClassPojo [originalLanguage = " + originalLanguage + ", imdbId = " + imdbId + ", video = " + video + ", title = " + title + ", backdropPath = " + backdropPath + ", revenue = " + revenue + ", genres = " + genres + ", popularity = " + popularity + ", productionCountries = " + productionCountries + ", id = " + id + ", voteCount = " + voteCount + ", budget = " + budget + ", overview = " + overview + ", originalTitle = " + originalTitle + ", runtime = " + runtime + ", poster_path = " + poster_path + ", spokenLanguages = " + spokenLanguages + ", productionCompanies = " + productionCompanies + ", releaseDate = " + releaseDate + ", voteAverage = " + voteAverage + ", belongsToCollection = " + belongsToCollection + ", tagline = " + tagline + ", adult = " + adult + ", homepage = " + homepage + ", status = " + status + "]";
+        return "ClassPojo [originalLanguage = " + originalLanguage + ", imdbId = " + imdbId + ", video = " + video + ", title = " + title + ", backdropPath = " + backdropPath + ", revenue = " + revenue + ", genres = " + genres + ", popularity = " + popularity + ", productionCountries = " + productionCountries + ", id = " + id + ", voteCount = " + voteCount + ", budget = " + budget + ", overview = " + overview + ", originalTitle = " + originalTitle + ", runtime = " + runtime + ", posterPath = " + posterPath + ", spokenLanguages = " + spokenLanguages + ", productionCompanies = " + productionCompanies + ", releaseDate = " + releaseDate + ", voteAverage = " + voteAverage + ", belongsToCollection = " + belongsToCollection + ", tagline = " + tagline + ", adult = " + adult + ", homepage = " + homepage + ", status = " + status + "]";
+    }
+
+    public Movie toMovie(MovieListing movieListing){
+        setId(movieListing.getId());
+        setTitle(movieListing.getTitle());
+        setOriginalTitle(movieListing.getOriginalTitle());
+        setOverview(movieListing.getOverview());
+        setOriginalLanguage(movieListing.getOriginalLanguage());
+        setReleaseDate(movieListing.getReleaseDate());
+        setPosterPath(movieListing.getPosterPath());
+        return this;
     }
 }
