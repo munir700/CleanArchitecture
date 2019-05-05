@@ -209,7 +209,7 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
             public void onDismiss(DialogInterface dialogInterface) {
                 int selection = propertySortDialog.getSelectedPosition();
                 if (selection != SortDialog.INITIAL_POSITION) {
-                    viewModel.setToClearLastLoadedContent(false);
+                    viewModel.setToClearLastLoadedContent(true);
                     loadMovies();
                 }
 
