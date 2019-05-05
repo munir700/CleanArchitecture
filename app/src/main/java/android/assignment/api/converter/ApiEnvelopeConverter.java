@@ -1,6 +1,7 @@
 package android.assignment.api.converter;
 
 import android.assignment.api.ResponseEnvelope;
+import android.assignment.models.ArrayListWithTotalResultCount;
 
 import com.bumptech.glide.load.HttpException;
 import com.google.gson.Gson;
@@ -45,9 +46,12 @@ public class ApiEnvelopeConverter<T> implements Converter<ResponseBody, T> {
         try {
             if (metaResponse.listItem != null) {
                 ResponseEnvelope<T> envelopeList = delegate.convert(updateResponseBody);
+                if (envelopeList.listItem instanceof ArrayListWithTotalResultCount) {
+                    ((ArrayListWithTotalResultCount) envelopeList.listItem).setTotalNumberOfResults(envelopeList.totalResults);
+                }
                 return envelopeList.listItem;
             } else {
-                throw new HttpException(/*metaResponse.message, metaResponse.status*/null);
+                throw new HttpException(metaResponse.message, metaResponse.status);
             }
         } catch (HttpException httpEx) {
             throw httpEx;

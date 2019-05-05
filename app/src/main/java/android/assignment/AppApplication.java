@@ -3,7 +3,7 @@ package android.assignment;
 import android.app.Activity;
 import android.app.Application;
 import android.assignment.di.DaggerNetComponent;
-import android.assignment.extendedModels.CustomDumperPlugin;
+import android.assignment.extendedmodels.CustomDumperPlugin;
 import android.content.Context;
 
 import com.facebook.stetho.DumperPluginsProvider;

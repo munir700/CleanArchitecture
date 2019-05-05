@@ -13,7 +13,7 @@
 
         <variable
             name="vm"
-            type="android.assignment.viewModels.MovieViewModel" />
+            type="android.assignment.viewmodels.MovieViewModel" />
 
 
     </data>

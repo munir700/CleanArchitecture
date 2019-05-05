@@ -1,5 +1,6 @@
 package android.assignment.api;
 
+import android.assignment.models.ArrayListWithTotalResultCount;
 import android.assignment.models.MovieListing;
 import android.assignment.models.Videos;
 
@@ -13,7 +14,7 @@ import retrofit2.http.Query;
 public interface ApiEnvelopeService {
 
     @GET("movie/{playing_type}/")
-    Call<List<MovieListing>> getMovieList(@Path("playing_type") String playingType, @Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int page);
+    Call<ArrayListWithTotalResultCount<MovieListing>> getMovieList(@Path("playing_type") String playingType, @Query("api_key") String apiKey, @Query("language") String lang, @Query("page") int page);
 
 
     @GET("movie/{movie_id}/videos")

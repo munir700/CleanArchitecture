@@ -13,9 +13,15 @@ public class ResponseEnvelope<T> implements Serializable {
     int page;
 
     @SerializedName("status_code")
-    int status;
+    public int status;
     @SerializedName("status_message")
-    String message;
+    public String message;
+
+    @SerializedName("total_pages")
+    public int totalPages;
+
+    @SerializedName("total_results")
+    public int totalResults;
 
     @SerializedName("results")
     public T listItem;

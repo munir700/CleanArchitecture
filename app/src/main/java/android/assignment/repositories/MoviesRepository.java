@@ -8,6 +8,7 @@ import android.assignment.api.ApiService;
 import android.assignment.base.BaseNetworkCallBack;
 import android.assignment.base.BaseViewModel;
 import android.assignment.enums.ViewModelEventsEnum;
+import android.assignment.models.ArrayListWithTotalResultCount;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
 import android.assignment.models.Videos;
@@ -18,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MoviesRepository {
@@ -36,16 +38,16 @@ public class MoviesRepository {
 
     }
 
-    public MutableLiveData<List<MovieListing>> getMoviesList(final BaseViewModel viewModel, Call<List<MovieListing>> listCall, final String playingType) {
+    public MutableLiveData<ArrayListWithTotalResultCount<MovieListing>> getMoviesList(final BaseViewModel viewModel, Call<ArrayListWithTotalResultCount<MovieListing>> listCall, final String playingType) {
 
-        final MutableLiveData<List<MovieListing>> moviesLiveData = new MutableLiveData<>();
+        final MutableLiveData<ArrayListWithTotalResultCount<MovieListing>> moviesLiveData = new MutableLiveData<>();
         if (networkUtils.isConnectedToInternet()) {
             if (listCall != null)
                 listCall.cancel();
             listCall = apiEnvelopeService.getMovieList(playingType, BuildConfig.API_KEY, "en-US", 4);
-            listCall.enqueue(new BaseNetworkCallBack<List<MovieListing>>(viewModel) {
+            listCall.enqueue(new BaseNetworkCallBack<ArrayListWithTotalResultCount<MovieListing>>(viewModel) {
                 @Override
-                public void onResponse(Call<List<MovieListing>> call, Response<List<MovieListing>> response) {
+                public void onResponse(Call<ArrayListWithTotalResultCount<MovieListing>> call, Response<ArrayListWithTotalResultCount<MovieListing>> response) {
                     super.onResponse(call, response);
                     if (!call.isCanceled() && response.isSuccessful()) {
                         moviesLiveData.postValue(response.body());
@@ -92,13 +94,17 @@ public class MoviesRepository {
                 listCall.cancel();
 
             listCall = apiEnvelopeService.getMovieVideo(Integer.valueOf(movieId), BuildConfig.API_KEY, "en-US");
-            listCall.enqueue(new BaseNetworkCallBack<Videos>(viewModel) {
+            listCall.enqueue(new Callback<Videos>() {
                 @Override
                 public void onResponse(Call<Videos> call, Response<Videos> response) {
-                    super.onResponse(call, response);
                     if (!call.isCanceled() && response.isSuccessful()) {
                         moviesLiveData.postValue(response.body());
                     }
+                }
+
+                @Override
+                public void onFailure(Call<Videos> call, Throwable t) {
+
                 }
             });
 

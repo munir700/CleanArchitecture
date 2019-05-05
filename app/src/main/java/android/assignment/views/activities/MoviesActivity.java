@@ -8,12 +8,13 @@ import android.assignment.databinding.ActivityMoviesBinding;
 import android.assignment.databinding.RowListingsBinding;
 import android.assignment.enums.ErrorResponseEnum;
 import android.assignment.enums.ViewModelEventsEnum;
+import android.assignment.models.ArrayListWithTotalResultCount;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
 import android.assignment.ui.SortDialog;
 import android.assignment.utils.AppConstants;
 import android.assignment.utils.ErrorResponse;
-import android.assignment.viewModels.MovieViewModel;
+import android.assignment.viewmodels.MovieViewModel;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -144,17 +145,17 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
     }
 
     private void loadMovies() {
-        viewModel.getMovies().observe(this, new Observer<List<MovieListing>>() {
+        viewModel.getMovies().observe(this, new Observer<ArrayListWithTotalResultCount<MovieListing>>() {
             @Override
-            public void onChanged(@Nullable List<MovieListing> movies) {
+            public void onChanged(@Nullable ArrayListWithTotalResultCount<MovieListing> movies) {
                 filterMovies(movies);
             }
         });
     }
 
-    private void filterMovies(final List<MovieListing> movies) {
+    private void filterMovies(final ArrayListWithTotalResultCount<MovieListing> movies) {
         List<MovieListing> movieList = viewModel.removeAdultMovies(movies);
-        viewModel.setMovieCount(viewModel.getPreferenceHandler().getLastSelectedSortTitle() + " # " + movieList.size());
+        viewModel.setMovieCount(viewModel.getPreferenceHandler().getLastSelectedSortTitle() + " # " + movies.getTotalNumberOfResults());
         listingAdapter.setData(movieList);
 
     }

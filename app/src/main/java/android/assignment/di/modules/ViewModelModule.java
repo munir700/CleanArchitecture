@@ -3,8 +3,8 @@ package android.assignment.di.modules;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.assignment.di.ViewModelKey;
-import android.assignment.viewModels.MovieDetailViewModel;
-import android.assignment.viewModels.MovieViewModel;
+import android.assignment.viewmodels.MovieDetailViewModel;
+import android.assignment.viewmodels.MovieViewModel;
 
 import dagger.Binds;
 import dagger.Module;

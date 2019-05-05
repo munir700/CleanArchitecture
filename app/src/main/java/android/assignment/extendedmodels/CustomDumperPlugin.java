@@ -1,4 +1,4 @@
-package android.assignment.extendedModels;
+package android.assignment.extendedmodels;
 
 import com.facebook.stetho.dumpapp.DumpException;
 import com.facebook.stetho.dumpapp.DumperContext;

@@ -8,8 +8,8 @@ import android.assignment.base.BaseActivity;
 import android.assignment.databinding.ActivityMovieDetailBinding;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
-import android.assignment.models.MovieListing;
-import android.assignment.viewModels.MovieDetailViewModel;
+import android.assignment.models.Videos;
+import android.assignment.viewmodels.MovieDetailViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,7 +30,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     public final static String MOVIES_INTENT_KEY = "movie_detail";
 
 
-    Movie movieDetail;
+    private Movie movieDetail;
+    private Videos videos;
 
     public static void openActivityForResult(Activity activity,
                                              Movie movie, int requestCode, int listingPosition) {
@@ -77,6 +78,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         movieDetail = getIntent().getParcelableExtra(MOVIES_INTENT_KEY);
+        loadMovieVideo();
         loadMovieDetail();
         initImagePlaceHolder();
         binding.tvDescription.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +125,15 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailViewModel, Acti
                 movieDetail = movie;
                 binding.setMovie(movieDetail);
                 binding.rlDetails.setGravity(View.VISIBLE);
+            }
+        });
+    }
+
+    private void loadMovieVideo() {
+        viewModel.getMovieVideo(movieDetail.getId()).observe(this, new Observer<Videos>() {
+            @Override
+            public void onChanged(@Nullable Videos video) {
+                videos = video;
             }
         });
     }

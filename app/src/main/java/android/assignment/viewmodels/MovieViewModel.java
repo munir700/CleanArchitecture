@@ -1,8 +1,9 @@
-package android.assignment.viewModels;
+package android.assignment.viewmodels;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.assignment.BR;
 import android.assignment.base.BaseViewModel;
+import android.assignment.models.ArrayListWithTotalResultCount;
 import android.assignment.models.MovieListing;
 import android.assignment.preferences.PreferenceHandler;
 import android.assignment.repositories.MoviesRepository;
@@ -25,7 +26,7 @@ public class MovieViewModel extends BaseViewModel {
 
     private ErrorResponse errorResponse;
 
-    Call<List<MovieListing>> listCall;
+    Call<ArrayListWithTotalResultCount<MovieListing>> listCall;
 
 
     @Inject
@@ -63,7 +64,7 @@ public class MovieViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.errorResponse);
     }
 
-    public MutableLiveData<List<MovieListing>> getMovies() {
+    public MutableLiveData<ArrayListWithTotalResultCount<MovieListing>> getMovies() {
         return moviesRepository.getMoviesList(this, listCall, preferenceHandler.getLastSelectedSort());
     }
 
