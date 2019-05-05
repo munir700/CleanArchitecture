@@ -147,15 +147,19 @@ public class MoviesActivity extends BaseActivity<MovieViewModel, ActivityMoviesB
         viewModel.getMovies().observe(this, new Observer<List<MovieListing>>() {
             @Override
             public void onChanged(@Nullable List<MovieListing> movies) {
-                List<MovieListing> movieList = movies;
-                viewModel.setMovieCount(viewModel.getPreferenceHandler().getLastSelectedSortTitle() + " # " + movieList.size());
-                listingAdapter.setData(movieList);
+                filterMovies(movies);
             }
         });
     }
 
-    public void openSortDialog(View v) {
+    private void filterMovies(final List<MovieListing> movies) {
+        List<MovieListing> movieList = viewModel.removeAdultMovies(movies);
+        viewModel.setMovieCount(viewModel.getPreferenceHandler().getLastSelectedSortTitle() + " # " + movieList.size());
+        listingAdapter.setData(movieList);
 
+    }
+
+    public void openSortDialog(View v) {
         final SortDialog propertySortDialog = new SortDialog(MoviesActivity.this, AppConstants.moviesSortModelList, viewModel.getPreferenceHandler());
         propertySortDialog.setCancelable(true);
         if (propertySortDialog.getWindow() != null)

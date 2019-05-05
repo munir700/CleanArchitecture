@@ -3,7 +3,6 @@ package android.assignment.viewModels;
 import android.arch.lifecycle.MutableLiveData;
 import android.assignment.BR;
 import android.assignment.base.BaseViewModel;
-import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
 import android.assignment.preferences.PreferenceHandler;
 import android.assignment.repositories.MoviesRepository;
@@ -12,6 +11,7 @@ import android.databinding.Bindable;
 import android.databinding.ObservableField;
 import android.util.Log;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,10 +68,11 @@ public class MovieViewModel extends BaseViewModel {
     }
 
     public List<MovieListing> removeAdultMovies(List<MovieListing> listData) {
-        for (MovieListing movie : listData) {
-            if (!movie.getAdult()) {
+        for (Iterator<MovieListing> iterator = listData.iterator(); iterator.hasNext(); ) {
+            MovieListing movie = iterator.next();
+            if (movie.getAdult()) {
                 Log.e("removed movie", movie.getTitle());
-                listData.remove(movie);
+                iterator.remove();
             }
         }
         return listData;

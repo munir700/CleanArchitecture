@@ -10,6 +10,7 @@ import android.assignment.base.BaseViewModel;
 import android.assignment.enums.ViewModelEventsEnum;
 import android.assignment.models.Movie;
 import android.assignment.models.MovieListing;
+import android.assignment.models.Videos;
 import android.assignment.utils.NetworkUtils;
 
 import java.util.List;
@@ -41,7 +42,6 @@ public class MoviesRepository {
         if (networkUtils.isConnectedToInternet()) {
             if (listCall != null)
                 listCall.cancel();
-
             listCall = apiEnvelopeService.getMovieList(playingType, BuildConfig.API_KEY, "en-US", 4);
             listCall.enqueue(new BaseNetworkCallBack<List<MovieListing>>(viewModel) {
                 @Override
@@ -51,7 +51,6 @@ public class MoviesRepository {
                         moviesLiveData.postValue(response.body());
                     }
                 }
-
             });
 
         } else {
@@ -77,7 +76,30 @@ public class MoviesRepository {
                         moviesLiveData.postValue(response.body());
                     }
                 }
+            });
 
+        } else {
+            viewModel.notifyObserver(ViewModelEventsEnum.NO_INTERNET_CONNECTION, viewModel.getAppManager().getContext().getString(R.string.NO_INTERNET_CONNECTIVITY));
+        }
+        return moviesLiveData;
+    }
+
+    public MutableLiveData<Videos> getMovieVideo(final BaseViewModel viewModel, Call<Videos> listCall, String movieId) {
+
+        final MutableLiveData<Videos> moviesLiveData = new MutableLiveData<>();
+        if (networkUtils.isConnectedToInternet()) {
+            if (listCall != null)
+                listCall.cancel();
+
+            listCall = apiEnvelopeService.getMovieVideo(Integer.valueOf(movieId), BuildConfig.API_KEY, "en-US");
+            listCall.enqueue(new BaseNetworkCallBack<Videos>(viewModel) {
+                @Override
+                public void onResponse(Call<Videos> call, Response<Videos> response) {
+                    super.onResponse(call, response);
+                    if (!call.isCanceled() && response.isSuccessful()) {
+                        moviesLiveData.postValue(response.body());
+                    }
+                }
             });
 
         } else {
